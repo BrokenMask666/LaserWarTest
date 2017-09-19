@@ -1,0 +1,101 @@
+﻿<Page
+    x:Class="LaserwarTest.Pages.AppShell"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:LaserwarTest.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    
+    xmlns:sideMenu="using:LaserwarTest.UI.SideMenu"
+    >
+    
+    <Page.Resources>
+        <local:AppMenuItemConverter x:Key="AppMenuItemConverter"/>
+
+        <Style x:Key="AppMenuItemContainerStyle" TargetType="ListViewItem">
+            <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}"/>
+            <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}"/>
+            <Setter Property="TabNavigation" Value="Local"/>
+            <Setter Property="IsHoldingEnabled" Value="True"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="MinWidth" Value="{ThemeResource ListViewItemMinWidth}"/>
+            <Setter Property="MinHeight" Value="{ThemeResource ListViewItemMinHeight}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListViewItem">
+                        <ListViewItemPresenter 
+                            CheckBrush="{ThemeResource SystemControlForegroundBaseMediumHighBrush}" 
+                            ContentMargin="{TemplateBinding Padding}" 
+                            CheckMode="Inline" 
+                            ContentTransitions="{TemplateBinding ContentTransitions}" 
+                            CheckBoxBrush="{ThemeResource SystemControlForegroundBaseMediumHighBrush}" 
+                            DragForeground="{ThemeResource ListViewItemDragForegroundThemeBrush}" 
+                            DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}" 
+                            DragBackground="{ThemeResource ListViewItemDragBackgroundThemeBrush}" 
+                            DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}" 
+                            FocusBorderBrush="{ThemeResource SystemControlForegroundAltHighBrush}" 
+                            FocusSecondaryBorderBrush="{ThemeResource SystemControlForegroundBaseHighBrush}" 
+                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                            PointerOverForeground="{ThemeResource SystemControlHighlightAltBaseHighBrush}" 
+                            PlaceholderBackground="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}" 
+                            ReorderHintOffset="{ThemeResource ListViewItemReorderHintThemeOffset}" 
+                            SelectionCheckMarkVisualEnabled="True" 
+                            SelectedForeground="{ThemeResource SystemControlHighlightAltBaseHighBrush}" 
+                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                            
+                            PointerOverBackground="{ThemeResource LW_SideMenuItemPointerOverBackgroundBrush}" 
+                            SelectedPointerOverBackground="{ThemeResource LW_ButtonAccentPointerOverBackgroundBrush}" 
+                            PressedBackground="{ThemeResource LW_SideMenuItemPressedBackgroundBrush}" 
+                            SelectedPressedBackground="{ThemeResource LW_ButtonAccentPressedBackgroundBrush}" 
+                            SelectedBackground="{ThemeResource LW_ButtonAccentBackgroundBrush}" 
+                            />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
+
+    <Grid
+        Background="White"
+        >
+        <SplitView
+            PaneBackground="{StaticResource LW_SideMenuPaneBackgroundBrush}"
+            DisplayMode="CompactInline"
+            CompactPaneLength="100"
+            >
+            <SplitView.Pane>
+                <ListView
+                    ItemContainerStyle="{StaticResource AppMenuItemContainerStyle}"
+                    VerticalAlignment="Center"
+                    ItemsSource="{x:Bind Menu.Items}"
+                    SelectedItem="{x:Bind Menu.SelectedItem, Mode=TwoWay, Converter={StaticResource AppMenuItemConverter}}"
+                    >
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="sideMenu:AppMenuItem">
+                            <Grid Width="100" Height="85">
+                                <Image 
+                                    Width="20"
+                                    Height="20"
+                                    VerticalAlignment="Center" 
+                                    HorizontalAlignment="Center" 
+                                    Source="{x:Bind Icon, Mode=TwoWay}"
+                                    />
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+
+            </SplitView.Pane>
+
+            <Frame x:Name="InnerFrame"/>
+
+        </SplitView>
+
+    </Grid>
+</Page>

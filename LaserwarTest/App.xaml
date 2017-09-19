@@ -1,0 +1,177 @@
+﻿<Application
+    x:Class="LaserwarTest.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:LaserwarTest"
+    RequestedTheme="Light"
+    
+    xmlns:ext="using:LaserwarTest.UI.Controls.Extensions"
+    >
+
+    <Application.Resources>
+        <Color x:Key="LW_SideMenuPaneBackgroundColor">#373B3C</Color>
+        <Color x:Key="LW_SideMenuItemPointerOverBackgroundColor">#646B6C</Color>
+        <Color x:Key="LW_SideMenuItemPressedBackgroundColor">#151717</Color>
+
+
+        <Color x:Key="LW_ButtonAccentBackgroundColor">#015AFF</Color>
+        <Color x:Key="LW_ButtonAccentPointerOverBackgroundColor">#6297FA</Color>
+        <Color x:Key="LW_ButtonAccentPressedBackgroundColor">#0644B8</Color>
+
+        <Color x:Key="LW_ButtonDisabledBackgroundColor">#D5D6D8</Color>
+        <Color x:Key="LW_ButtonDisabledForegroundColor">#A0A2A6</Color>
+        
+        <SolidColorBrush x:Key="LW_SideMenuPaneBackgroundBrush" Color="{StaticResource LW_SideMenuPaneBackgroundColor}"/>
+        <SolidColorBrush x:Key="LW_SideMenuItemPointerOverBackgroundBrush" Color="{StaticResource LW_SideMenuItemPointerOverBackgroundColor}"/>
+        <SolidColorBrush x:Key="LW_SideMenuItemPressedBackgroundBrush" Color="{StaticResource LW_SideMenuItemPressedBackgroundColor}"/>
+
+        <SolidColorBrush x:Key="LW_ButtonBackgroundBrush" Color="Transparent"/>
+        <SolidColorBrush x:Key="LW_ButtonAccentBackgroundBrush" Color="{StaticResource LW_ButtonAccentBackgroundColor}"/>
+        
+        <SolidColorBrush x:Key="LW_ButtonPointerOverBackgroundBrush" Color="{StaticResource LW_ButtonAccentPointerOverBackgroundColor}"/>
+        <SolidColorBrush x:Key="LW_ButtonAccentPointerOverBackgroundBrush" Color="{StaticResource LW_ButtonAccentPointerOverBackgroundColor}"/>
+
+        <SolidColorBrush x:Key="LW_ButtonPressedBackgroundBrush" Color="Transparent"/>
+        <SolidColorBrush x:Key="LW_ButtonAccentPressedBackgroundBrush" Color="{StaticResource LW_ButtonAccentPressedBackgroundColor}"/>
+
+        <SolidColorBrush x:Key="LW_ButtonDisabledBackgroundBrush" Color="{StaticResource LW_ButtonDisabledBackgroundColor}"/>
+        <SolidColorBrush x:Key="LW_ButtonAccentDisabledBackgroundBrush" Color="{StaticResource LW_ButtonDisabledBackgroundColor}"/>
+
+        <SolidColorBrush x:Key="LW_ButtonForegroundBrush" Color="{StaticResource LW_ButtonAccentBackgroundColor}"/>
+        <SolidColorBrush x:Key="LW_ButtonAccentForegroundBrush" Color="White"/>
+
+        <SolidColorBrush x:Key="LW_ButtonPointerOverForegroundBrush" Color="{StaticResource LW_ButtonAccentPointerOverBackgroundColor}"/>
+        <SolidColorBrush x:Key="LW_ButtonAccentPointerOverForegroundBrush" Color="White"/>
+
+        <SolidColorBrush x:Key="LW_ButtonPressedForegroundBrush" Color="{StaticResource LW_ButtonAccentPressedBackgroundColor}"/>
+        <SolidColorBrush x:Key="LW_ButtonAccentPressedForegroundBrush" Color="White"/>
+
+        <SolidColorBrush x:Key="LW_ButtonDisabledForegroundBrush" Color="{StaticResource LW_ButtonDisabledForegroundColor}"/>
+        <SolidColorBrush x:Key="LW_ButtonAccentDisabledForegroundBrush" Color="{StaticResource LW_ButtonDisabledForegroundColor}"/>
+
+
+
+
+
+        <Style x:Key="LW_ButtonBaseStyle" TargetType="Button">
+            <Setter Property="Padding" Value="24,8,24,8"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+        <Style x:Key="LW_ButtonDefaultStyle" TargetType="Button" BasedOn="{StaticResource LW_ButtonBaseStyle}">
+            <Setter Property="Background" Value="{ThemeResource LW_ButtonBackgroundBrush}"/>
+            <Setter Property="Foreground" Value="{ThemeResource LW_ButtonForegroundBrush}"/>
+            <Setter Property="BorderBrush" Value="{ThemeResource LW_ButtonAccentBackgroundBrush}"/>
+            <Setter Property="BorderThickness" Value="{ThemeResource ButtonBorderThemeThickness}"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}"/>
+            <Setter Property="UseSystemFocusVisuals" Value="True"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid x:Name="RootGrid" Background="{TemplateBinding Background}">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal">
+                                        <Storyboard>
+                                            <PointerUpThemeAnimation Storyboard.TargetName="RootGrid"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="PointerOver">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource LW_ButtonPointerOverForegroundBrush}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="BorderBrush" Storyboard.TargetName="ContentPresenter">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource LW_ButtonPointerOverBackgroundBrush}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <PointerUpThemeAnimation Storyboard.TargetName="RootGrid"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Pressed">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource LW_ButtonPressedForegroundBrush}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="BorderBrush" Storyboard.TargetName="ContentPresenter">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource LW_ButtonAccentPressedBackgroundBrush}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <PointerDownThemeAnimation Storyboard.TargetName="RootGrid"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Disabled">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource LW_ButtonDisabledForegroundBrush}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="BorderBrush" Storyboard.TargetName="ContentPresenter">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource LW_ButtonDisabledBackgroundBrush}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            <ContentPresenter x:Name="ContentPresenter" AutomationProperties.AccessibilityView="Raw" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" ContentTemplate="{TemplateBinding ContentTemplate}" ContentTransitions="{TemplateBinding ContentTransitions}" Content="{TemplateBinding Content}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" Padding="{TemplateBinding Padding}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="LW_ButtonAccentStyle" TargetType="Button" BasedOn="{StaticResource LW_ButtonBaseStyle}">
+            <Setter Property="Background" Value="{ThemeResource LW_ButtonAccentBackgroundBrush}"/>
+            <Setter Property="Foreground" Value="{ThemeResource LW_ButtonAccentForegroundBrush}"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="{ThemeResource ButtonBorderThemeThickness}"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}"/>
+            <Setter Property="UseSystemFocusVisuals" Value="True"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid x:Name="RootGrid" Background="{TemplateBinding Background}">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal">
+                                        <Storyboard>
+                                            <PointerUpThemeAnimation Storyboard.TargetName="RootGrid"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="PointerOver">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="RootGrid">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource LW_ButtonAccentPointerOverBackgroundBrush}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <PointerUpThemeAnimation Storyboard.TargetName="RootGrid"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Pressed">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="RootGrid">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource LW_ButtonAccentPressedBackgroundBrush}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <PointerDownThemeAnimation Storyboard.TargetName="RootGrid"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Disabled">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="RootGrid">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource LW_ButtonAccentDisabledBackgroundBrush}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource LW_ButtonAccentDisabledForegroundBrush}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            <ContentPresenter x:Name="ContentPresenter" AutomationProperties.AccessibilityView="Raw" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" ContentTemplate="{TemplateBinding ContentTemplate}" ContentTransitions="{TemplateBinding ContentTransitions}" Content="{TemplateBinding Content}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" Padding="{TemplateBinding Padding}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </Application.Resources>
+</Application>
