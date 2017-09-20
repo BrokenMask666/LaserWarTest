@@ -9,8 +9,6 @@
     mc:Ignorable="d"
     d:DesignHeight="680"
     d:DesignWidth="1420"
-    
-    xmlns:ext="using:LaserwarTest.UI.Controls.Extensions"
     >
 
     <UserControl.Resources>
@@ -121,38 +119,25 @@
                 <TextBlock
                     Grid.Row="1"
                     TextWrapping="Wrap"
-                    Text="ИГРА НА ПРОТОНЕ"
+                    Text="{x:Bind Title, Mode=OneWay}"
                     FontWeight="Medium"
                     FontSize="32"
                     Margin="0,-5,0,0"
                     />
 
-                <StackPanel
+                <ContentPresenter
                     Grid.Row="1"
                     Grid.Column="1"
-                    Orientation="Horizontal"
-                    HorizontalAlignment="Right"
-                    >
-                    <Button 
-                        Style="{StaticResource LW_ButtonDefaultStyle}"
-                        ext:ContentControlExtensions.UseUpperCaseProperty="True"
-                        Content="опубликовать В вК"
-                        />
+                    Content="{x:Bind TitleRightContent, Mode=OneWay}"
+                    />
 
-                    <Button
-                        Style="{StaticResource LW_ButtonAccentStyle}" 
-                        ext:ContentControlExtensions.UseUpperCaseProperty="True"
-                        Margin="10,0,0,0"
-                        Content="сохранить как PDF"
-                        />
-
-                </StackPanel>
+                
             </Grid>
 
             <ContentPresenter
                Grid.Row="1"
                Grid.Column="1"
-               Content="{x:Bind InnerContent}"
+               Content="{x:Bind InnerContent, Mode=OneWay}"
                />
 
         </Grid>

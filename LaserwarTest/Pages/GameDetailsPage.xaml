@@ -8,16 +8,32 @@
     mc:Ignorable="d"
     
     xmlns:layouts="using:LaserwarTest.UI.Layouts"
+    xmlns:ext="using:LaserwarTest.UI.Controls.Extensions"
     >
 
     <Grid>
-        <layouts:CommonLayout Background="White">
-            <TextBlock 
-                Text="GameDetailsPage"
-                VerticalAlignment="Center"
-                HorizontalAlignment="Center"
-                />
+        <layouts:CommonLayout Background="White" Title="Детали игры">
+            <layouts:CommonLayout.TitleRightContent>
+                <StackPanel
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    >
+                    <Button 
+                        Style="{StaticResource LW_ButtonDefaultStyle}"
+                        ext:ContentControlExtensions.UseUpperCaseProperty="True"
+                        Content="опубликовать В вК"
+                        />
 
+                    <Button
+                        Style="{StaticResource LW_ButtonAccentStyle}" 
+                        ext:ContentControlExtensions.UseUpperCaseProperty="True"
+                        Margin="10,0,0,0"
+                        Content="сохранить как PDF"
+                        />
+
+                </StackPanel>
+            </layouts:CommonLayout.TitleRightContent>
+            
         </layouts:CommonLayout>
     </Grid>
 </Page>

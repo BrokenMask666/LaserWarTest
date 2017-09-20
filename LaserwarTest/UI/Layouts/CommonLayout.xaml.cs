@@ -55,6 +55,19 @@ namespace LaserwarTest.UI.Layouts
 
         #region DependencyProperty
 
+        public static readonly DependencyProperty TitleProperty =
+            DependencyProperty.Register(
+                nameof(InnerContent),
+                typeof(string),
+                typeof(CommonLayout),
+                new PropertyMetadata(""));
+
+        public string Title
+        {
+            set { SetValue(TitleProperty, value.ToUpper()); }
+            get { return (string)GetValue(TitleProperty); }
+        }
+
         public static readonly DependencyProperty InnerContentProperty =
             DependencyProperty.Register(
                 nameof(InnerContent),
@@ -62,11 +75,24 @@ namespace LaserwarTest.UI.Layouts
                 typeof(CommonLayout),
                 null);
 
-
         public object InnerContent
         {
             set { SetValue(InnerContentProperty, value); }
             get { return GetValue(InnerContentProperty); }
+        }
+
+        public static readonly DependencyProperty TitleRightContentProperty =
+            DependencyProperty.Register(
+                nameof(TitleRightContent),
+                typeof(object),
+                typeof(CommonLayout),
+                null);
+
+
+        public object TitleRightContent
+        {
+            set { SetValue(TitleRightContentProperty, value); }
+            get { return GetValue(TitleRightContentProperty); }
         }
 
         #endregion DependencyProperty

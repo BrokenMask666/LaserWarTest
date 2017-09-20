@@ -11,7 +11,7 @@
     >
 
     <Grid>
-        <layouts:CommonLayout Background="White">
+        <layouts:CommonLayout Background="White" Title="Игры">
             <Button
                 Style="{StaticResource LW_ButtonAccentStyle}"
                 VerticalAlignment="Center"
