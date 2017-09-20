@@ -20,16 +20,11 @@ namespace LaserwarTest.Pages
     /// <summary>
     /// Пустая страница, которую можно использовать саму по себе или для перехода внутри фрейма.
     /// </summary>
-    public sealed partial class GamesPage : Page
+    public sealed partial class GameDetailsPage : Page
     {
-        public GamesPage()
+        public GameDetailsPage()
         {
-            InitializeComponent();
-        }
-
-        private void Button_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            Frame.Navigate(typeof(GameDetailsPage));
+            this.InitializeComponent();
         }
     }
 }

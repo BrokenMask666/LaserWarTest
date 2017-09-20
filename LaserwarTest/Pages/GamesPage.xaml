@@ -5,10 +5,21 @@
     xmlns:local="using:LaserwarTest.Pages"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    
+    xmlns:layouts="using:LaserwarTest.UI.Layouts"
+    >
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <TextBlock Text="GamesPage"/>
+    <Grid>
+        <layouts:CommonLayout Background="White">
+            <Button
+                Style="{StaticResource LW_ButtonAccentStyle}"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center"
+                Content="Детализация"
+                Tapped="Button_Tapped"
+                />
 
+        </layouts:CommonLayout>
     </Grid>
 </Page>

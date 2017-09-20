@@ -97,11 +97,15 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Commons\Observables\ObservableObject.cs" />
+    <Compile Include="Helpers\VisualTreeExplorer.cs" />
     <Compile Include="Pages\AppShell.xaml.cs">
       <DependentUpon>AppShell.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\DownloadPage.xaml.cs">
       <DependentUpon>DownloadPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\GameDetailsPage.xaml.cs">
+      <DependentUpon>GameDetailsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\GamesPage.xaml.cs">
       <DependentUpon>GamesPage.xaml</DependentUpon>
@@ -110,7 +114,10 @@
       <DependentUpon>SoundsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UI\Commands\Navigation\BackCommand.cs" />
+    <Compile Include="UI\Commands\Navigation\NavigationCommandBase.cs" />
     <Compile Include="UI\Controls\Extensions\ContentControlExtensions.cs" />
+    <Compile Include="UI\Layouts\BackButton.cs" />
     <Compile Include="UI\Layouts\CommonLayout.xaml.cs">
       <DependentUpon>CommonLayout.xaml</DependentUpon>
     </Compile>
@@ -165,6 +172,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\DownloadPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\GameDetailsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
