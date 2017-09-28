@@ -97,6 +97,9 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Commons\Observables\ObservableObject.cs" />
+    <Compile Include="Core\Networking\Downloading\Downloader.cs" />
+    <Compile Include="Core\Networking\Downloading\Requests\DownloadRequest.cs" />
+    <Compile Include="Core\Networking\Downloading\Requests\DownloadRequestEventArgs.cs" />
     <Compile Include="Helpers\VisualTreeExplorer.cs" />
     <Compile Include="Pages\AppShell.xaml.cs">
       <DependentUpon>AppShell.xaml</DependentUpon>

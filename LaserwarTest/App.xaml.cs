@@ -1,4 +1,5 @@
-﻿using LaserwarTest.Pages;
+﻿using LaserwarTest.Core.Networking.Downloading;
+using LaserwarTest.Pages;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -30,7 +31,9 @@ namespace LaserwarTest
         public App()
         {
             InitializeComponent();
+
             Suspending += OnSuspending;
+            Resuming += OnResuming;
         }
 
         /// <summary>
@@ -90,8 +93,15 @@ namespace LaserwarTest
         private void OnSuspending(object sender, SuspendingEventArgs e)
         {
             var deferral = e.SuspendingOperation.GetDeferral();
-            //TODO: Сохранить состояние приложения и остановить все фоновые операции
+
+            Downloader.GetCurrent().Suspend();
+
             deferral.Complete();
+        }
+
+        private void OnResuming(object sender, object e)
+        {
+            Downloader.GetCurrent().Resume();
         }
     }
 }
