@@ -1,18 +1,9 @@
-﻿using LaserwarTest.UI.SideMenu;
+﻿using LaserwarTest.Core.UI.Popups;
+using LaserwarTest.UI.SideMenu;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 // Документацию по шаблону элемента "Пустая страница" см. по адресу https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -26,6 +17,8 @@ namespace LaserwarTest.Pages
         static AppShell _shell;
         public static AppShell GetCurrent() => _shell ?? throw new Exception("Application shell hasn't been initialized");
 
+        uint _openedPopups;
+
         AppMenu Menu { get; }
 
         public AppShell()
@@ -36,6 +29,23 @@ namespace LaserwarTest.Pages
             _shell = this;
 
             Menu = new AppMenu(InnerFrame);
+
+            PopupContent.PopupOpening += OnPopupOpening;
+            PopupContent.PopupClosed += OnPopupClosed;
+        }
+
+        private void OnPopupOpening(object sender, EventArgs e)
+        {
+            _openedPopups++;
+            if (_openedPopups == 1)
+                VisualStateManager.GoToState(this, ShowDialogState.Name, false);
+        }
+
+        private void OnPopupClosed(object sender, EventArgs e)
+        {
+            _openedPopups--;
+            if (_openedPopups == 0)
+                VisualStateManager.GoToState(this, NoDialogsState.Name, false);
         }
     }
 

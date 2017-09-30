@@ -24,7 +24,7 @@ namespace LaserwarTest.Pages
     {
         public GameDetailsPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
         }
     }
 }

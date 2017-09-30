@@ -1,0 +1,35 @@
+﻿<UserControl
+    x:Class="LaserwarTest.UI.Dialogs.ErrorDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:LaserwarTest.UI.Dialogs"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="400"
+    d:DesignWidth="600"
+    
+    xmlns:layouts="using:LaserwarTest.UI.Layouts"
+    xmlns:ext="using:LaserwarTest.UI.Controls.Extensions"
+    >
+
+    <layouts:DialogLayout Background="White" Title="{x:Bind Title, Mode=OneWay}">
+        <ScrollViewer VerticalScrollBarVisibility="Auto" VerticalScrollMode="Auto">
+            <TextBlock 
+                TextWrapping="Wrap"
+                Text="{x:Bind Message, Mode=OneWay}"
+                />
+            
+        </ScrollViewer>
+
+        <layouts:DialogLayout.CommandsBar>
+            <Button
+                Style="{StaticResource LW_ButtonAccentStyle}"
+                ext:ContentControlExtensions.UseUpperCaseProperty="True"
+                Content="закрыть"
+                Tapped="CloseButton_Tapped"
+                />
+        </layouts:DialogLayout.CommandsBar>
+
+    </layouts:DialogLayout>
+</UserControl>

@@ -60,10 +60,9 @@
         </Style>
     </Page.Resources>
 
-    <Grid
-        Background="White"
-        >
+    <Grid>
         <SplitView
+            Background="White"
             PaneBackground="{StaticResource LW_SideMenuPaneBackgroundBrush}"
             DisplayMode="CompactInline"
             CompactPaneLength="100"
@@ -97,5 +96,18 @@
 
         </SplitView>
 
+        <Grid x:Name="ContentOverlay" Background="#545454" Opacity="0.75" Visibility="Collapsed"/>
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="DialogStates">
+                <VisualState x:Name="NoDialogsState"/>
+                <VisualState x:Name="ShowDialogState">
+                    <VisualState.Setters>
+                        <Setter Target="ContentOverlay.Visibility" Value="Visible"/>
+                        <!--<Setter Target="InnerFrame.Visibility" Value="Collapsed"/>-->
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
     </Grid>
 </Page>

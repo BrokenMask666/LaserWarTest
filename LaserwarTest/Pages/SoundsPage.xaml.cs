@@ -24,7 +24,7 @@ namespace LaserwarTest.Pages
     {
         public SoundsPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
         }
     }
 }

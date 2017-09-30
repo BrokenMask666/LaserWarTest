@@ -173,5 +173,11 @@
             </Setter>
         </Style>
 
+        <Style x:Key="LW_TextBlockPageTitleStyle" TargetType="TextBlock">
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="FontSize" Value="32"/>
+        </Style>
+
     </Application.Resources>
 </Application>

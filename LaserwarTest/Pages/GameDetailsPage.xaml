@@ -12,8 +12,8 @@
     >
 
     <Grid>
-        <layouts:CommonLayout Background="White" Title="Детали игры">
-            <layouts:CommonLayout.TitleRightContent>
+        <layouts:PageLayout Background="White" Title="Детали игры">
+            <layouts:PageLayout.TitleRightContent>
                 <StackPanel
                     Orientation="Horizontal"
                     HorizontalAlignment="Right"
@@ -21,7 +21,7 @@
                     <Button 
                         Style="{StaticResource LW_ButtonDefaultStyle}"
                         ext:ContentControlExtensions.UseUpperCaseProperty="True"
-                        Content="опубликовать В вК"
+                        Content="опубликовать в вк"
                         />
 
                     <Button
@@ -32,8 +32,8 @@
                         />
 
                 </StackPanel>
-            </layouts:CommonLayout.TitleRightContent>
+            </layouts:PageLayout.TitleRightContent>
             
-        </layouts:CommonLayout>
+        </layouts:PageLayout>
     </Grid>
 </Page>

@@ -11,8 +11,8 @@
     >
 
     <Grid>
-        <layouts:CommonLayout Background="White" Title="Загрузка">
+        <layouts:PageLayout Background="White" Title="Загрузка">
             
-        </layouts:CommonLayout>
+        </layouts:PageLayout>
     </Grid>
 </Page>

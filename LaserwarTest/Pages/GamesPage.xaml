@@ -11,15 +11,16 @@
     >
 
     <Grid>
-        <layouts:CommonLayout Background="White" Title="Игры">
+        <layouts:PageLayout Background="White" Title="Игры">
             <Button
                 Style="{StaticResource LW_ButtonAccentStyle}"
                 VerticalAlignment="Center"
                 HorizontalAlignment="Center"
                 Content="Детализация"
                 Tapped="Button_Tapped"
+                Margin="200,80"
                 />
 
-        </layouts:CommonLayout>
+        </layouts:PageLayout>
     </Grid>
 </Page>

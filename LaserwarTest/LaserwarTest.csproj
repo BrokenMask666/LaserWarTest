@@ -100,6 +100,9 @@
     <Compile Include="Core\Networking\Downloading\Downloader.cs" />
     <Compile Include="Core\Networking\Downloading\Requests\DownloadRequest.cs" />
     <Compile Include="Core\Networking\Downloading\Requests\DownloadRequestEventArgs.cs" />
+    <Compile Include="Core\UI\Popups\Animations\IPopupContentAnimation.cs" />
+    <Compile Include="Core\UI\Popups\IPopupUIElement.cs" />
+    <Compile Include="Core\UI\Popups\PopupContent.cs" />
     <Compile Include="Helpers\VisualTreeExplorer.cs" />
     <Compile Include="Pages\AppShell.xaml.cs">
       <DependentUpon>AppShell.xaml</DependentUpon>
@@ -121,9 +124,18 @@
     <Compile Include="UI\Commands\Navigation\NavigationCommandBase.cs" />
     <Compile Include="UI\Controls\Extensions\ContentControlExtensions.cs" />
     <Compile Include="UI\Layouts\BackButton.cs" />
-    <Compile Include="UI\Layouts\CommonLayout.xaml.cs">
-      <DependentUpon>CommonLayout.xaml</DependentUpon>
+    <Compile Include="UI\Layouts\PageLayout.xaml.cs">
+      <DependentUpon>PageLayout.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\Layouts\DialogLayout.xaml.cs">
+      <DependentUpon>DialogLayout.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Popups\Animations\ScalePopupCloseAnimation.cs" />
+    <Compile Include="UI\Popups\Animations\ScalePopupOpenAnimation.cs" />
+    <Compile Include="UI\Dialogs\ErrorDialog.xaml.cs">
+      <DependentUpon>ErrorDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Popups\ErrorPopupContent.cs" />
     <Compile Include="UI\SideMenu\AppMenu.cs" />
     <Compile Include="UI\SideMenu\AppMenuItem.cs" />
   </ItemGroup>
@@ -190,14 +202,20 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UI\Layouts\CommonLayout.xaml">
+    <Page Include="UI\Layouts\PageLayout.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Layouts\DialogLayout.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Dialogs\ErrorDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="UI\Popups\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
