@@ -1,0 +1,2 @@
+MainPackage=D:\Anton\Coding\Laserwar\LaserwarTest\LaserwarTest\bin\x86\Debug\LaserwarTest_0.0.5.0_x86_Debug.appx
+SymbolPackage=D:\Anton\Coding\Laserwar\LaserwarTest\LaserwarTest\AppPackages\Debug (v 0.0.5)\LaserwarTest_0.0.5.0_Debug_Test\LaserwarTest_0.0.5.0_x86_Debug.appxsym
