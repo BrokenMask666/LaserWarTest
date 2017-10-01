@@ -96,13 +96,38 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Commons\Async\AsyncLock.cs" />
     <Compile Include="Commons\Observables\ObservableObject.cs" />
+    <Compile Include="Core\Data\DB\ISQLiteDBEntity.cs" />
+    <Compile Include="Core\Data\DB\SQLiteDB.cs" />
+    <Compile Include="Core\Data\DB\SQLiteDBConnectionProvider.cs" />
+    <Compile Include="Core\Data\DB\SQLiteDBHelper.cs" />
+    <Compile Include="Core\Data\DB\SQLiteDBTable.cs" />
+    <Compile Include="Core\Data\DB\Versioning\DBInfo.cs" />
+    <Compile Include="Core\Data\DB\Versioning\DBInfoLocal.cs" />
+    <Compile Include="Core\Data\DB\Versioning\DBVersionInfo.cs" />
+    <Compile Include="Core\Data\DB\Versioning\Xml\XmlDBInfo.cs" />
+    <Compile Include="Core\Data\DB\Versioning\Xml\XmlDBInfoLocal.cs" />
+    <Compile Include="Core\Data\DB\Versioning\Xml\XmlDBVersionInfo.cs" />
     <Compile Include="Core\Networking\Downloading\Downloader.cs" />
+    <Compile Include="Core\Networking\Downloading\DownloaderExceptions.cs" />
     <Compile Include="Core\Networking\Downloading\Requests\DownloadRequest.cs" />
     <Compile Include="Core\Networking\Downloading\Requests\DownloadRequestEventArgs.cs" />
+    <Compile Include="Core\Networking\Server\Requests\GetStringRequest.cs" />
     <Compile Include="Core\UI\Popups\Animations\IPopupContentAnimation.cs" />
     <Compile Include="Core\UI\Popups\IPopupUIElement.cs" />
     <Compile Include="Core\UI\Popups\PopupContent.cs" />
+    <Compile Include="Data\DB\DBManager.cs" />
+    <Compile Include="Data\DB\Entities\GameEntity.cs" />
+    <Compile Include="Data\DB\Entities\PlayerEntity.cs" />
+    <Compile Include="Data\DB\Entities\SoundEntity.cs" />
+    <Compile Include="Data\DB\Entities\TeamEntity.cs" />
+    <Compile Include="Data\DB\LocalDB.cs" />
+    <Compile Include="Data\DB\Tables\GameTable.cs" />
+    <Compile Include="Data\DB\Tables\PlayerTable.cs" />
+    <Compile Include="Data\DB\Tables\SoundTable.cs" />
+    <Compile Include="Data\DB\Tables\TeamTable.cs" />
+    <Compile Include="Data\Server\Requests\Json\JsonServerResponse.cs" />
     <Compile Include="Helpers\VisualTreeExplorer.cs" />
     <Compile Include="Pages\AppShell.xaml.cs">
       <DependentUpon>AppShell.xaml</DependentUpon>
@@ -146,6 +171,7 @@
     <None Include="LaserwarTest_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AppInfo\DBInfo.dbconfig" />
     <Content Include="Assets\Icons\back.png" />
     <Content Include="Assets\Icons\download.png" />
     <Content Include="Assets\Icons\downloaded_sound.png" />

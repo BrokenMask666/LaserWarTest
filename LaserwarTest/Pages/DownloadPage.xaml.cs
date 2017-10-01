@@ -1,5 +1,4 @@
-﻿using LaserwarTest.UI.Popups;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -26,8 +25,6 @@ namespace LaserwarTest.Pages
         public DownloadPage()
         {
             InitializeComponent();
-
-            new ErrorPopupContent("Не удалось загрузить файл").Open(isModal: true);
         }
     }
 }

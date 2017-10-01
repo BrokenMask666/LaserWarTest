@@ -1,5 +1,7 @@
 ﻿using LaserwarTest.Core.Networking.Downloading;
+using LaserwarTest.Data.DB;
 using LaserwarTest.Pages;
+using LaserwarTest.UI.Popups;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -41,7 +43,7 @@ namespace LaserwarTest
         /// например, если приложение запускается для открытия конкретного файла.
         /// </summary>
         /// <param name="e">Сведения о запросе и обработке запуска.</param>
-        protected override void OnLaunched(LaunchActivatedEventArgs e)
+        protected override async void OnLaunched(LaunchActivatedEventArgs e)
         {
             Frame rootFrame = Window.Current.Content as Frame;
 
@@ -62,6 +64,8 @@ namespace LaserwarTest
                 // Размещение фрейма в текущем окне
                 Window.Current.Content = rootFrame;
             }
+
+            await DBManager.GetLocalDB().Init();
 
             if (e.PrelaunchActivated == false)
             {
@@ -101,7 +105,12 @@ namespace LaserwarTest
 
         private void OnResuming(object sender, object e)
         {
-            Downloader.GetCurrent().Resume();
+            try { Downloader.GetCurrent().Resume(); }
+            catch (NoNetworkDownloaderException)
+            {
+                new ErrorPopupContent("Нет подключения к интернету", "Все выполняющиеся загрузки были отменены.\nПроверьте подключение к интернету и... начните все сначала :-)")
+                    .Open(true);
+            }
         }
     }
 }

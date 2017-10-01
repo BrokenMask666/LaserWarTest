@@ -21,11 +21,7 @@ namespace LaserwarTest.Core.Networking.Downloading.Requests
 
         public string GetID() => _id;
 
-        protected DownloadRequestID(string id)
-        {
-            _id = id;
-        }
-
+        public DownloadRequestID(string id) { _id = id; }
 
         public static implicit operator string(DownloadRequestID requestID) => requestID.GetID();
     }
@@ -33,7 +29,7 @@ namespace LaserwarTest.Core.Networking.Downloading.Requests
     /// <summary>
     /// Базовый класс, обеспечивающий загрузку файлов из удаленного источника
     /// </summary>
-    public abstract class DownloadRequest
+    public class DownloadRequest
     {
         RequestState _state;
 

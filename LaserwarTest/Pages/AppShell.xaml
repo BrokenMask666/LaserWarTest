@@ -97,6 +97,13 @@
         </SplitView>
 
         <Grid x:Name="ContentOverlay" Background="#545454" Opacity="0.75" Visibility="Collapsed"/>
+        <Grid x:Name="LoadingPanel" Background="#545454" Opacity="0.75" Visibility="Collapsed">
+            <ProgressRing
+                Width="60"
+                Height="60"
+                IsActive="True"
+                />
+        </Grid>
 
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="DialogStates">
@@ -104,6 +111,15 @@
                 <VisualState x:Name="ShowDialogState">
                     <VisualState.Setters>
                         <Setter Target="ContentOverlay.Visibility" Value="Visible"/>
+                        <!--<Setter Target="InnerFrame.Visibility" Value="Collapsed"/>-->
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+            <VisualStateGroup x:Name="LoadingStates">
+                <VisualState x:Name="LoadedState"/>
+                <VisualState x:Name="LoadingState">
+                    <VisualState.Setters>
+                        <Setter Target="LoadingPanel.Visibility" Value="Visible"/>
                         <!--<Setter Target="InnerFrame.Visibility" Value="Collapsed"/>-->
                     </VisualState.Setters>
                 </VisualState>

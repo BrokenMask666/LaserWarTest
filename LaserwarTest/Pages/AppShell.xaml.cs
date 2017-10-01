@@ -18,6 +18,7 @@ namespace LaserwarTest.Pages
         public static AppShell GetCurrent() => _shell ?? throw new Exception("Application shell hasn't been initialized");
 
         uint _openedPopups;
+        uint _loadRequests;
 
         AppMenu Menu { get; }
 
@@ -34,18 +35,32 @@ namespace LaserwarTest.Pages
             PopupContent.PopupClosed += OnPopupClosed;
         }
 
+        private void ToState(string state) => VisualStateManager.GoToState(this, state, false);
+
         private void OnPopupOpening(object sender, EventArgs e)
         {
             _openedPopups++;
-            if (_openedPopups == 1)
-                VisualStateManager.GoToState(this, ShowDialogState.Name, false);
+            if (_openedPopups == 1) ToState(ShowDialogState.Name);
         }
 
         private void OnPopupClosed(object sender, EventArgs e)
         {
             _openedPopups--;
-            if (_openedPopups == 0)
-                VisualStateManager.GoToState(this, NoDialogsState.Name, false);
+            if (_openedPopups == 0) ToState(NoDialogsState.Name);
+        }
+
+        public void SetLoading()
+        {
+            _loadRequests++;
+            if (_loadRequests == 1) ToState(LoadingState.Name);
+        }
+
+        public void SetLoaded()
+        {
+            if (_loadRequests == 0) return;
+
+            _loadRequests--;
+            if (_loadRequests == 0) ToState(LoadedState.Name);
         }
     }
 

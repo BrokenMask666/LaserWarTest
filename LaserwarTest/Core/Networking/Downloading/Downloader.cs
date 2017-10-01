@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Net.NetworkInformation;
 using System.Threading.Tasks;
 
 namespace LaserwarTest.Core.Networking.Downloading
@@ -43,30 +44,24 @@ namespace LaserwarTest.Core.Networking.Downloading
         public static Downloader GetCurrent() => _instance.Value;
 
         /// <summary>
-        /// Выполняет Get-запрос по указанному адресу и возвращает результат в виде строки
-        /// </summary>
-        /// <param name="requestUri">Адрес ресурса</param>
-        /// <returns></returns>
-        public async Task<string> GetStringRequest(string requestUri)
-        {
-            HttpClient client = new HttpClient();
-
-            return await client.GetStringAsync(requestUri);
-        }
-
-        /// <summary>
         /// Запускает выполнение указанного запроса.
         /// Если загрузчик приостановлен, то просто добавляет в коллекцию запросов
-        /// до тех пор, пока загрузчик не будет возобновлен
+        /// до тех пор, пока загрузчик не будет возобновлен.
+        /// 
+        /// Выбрасывает <see cref="RequestAlreadyExistsDownloaderException"/>,
+        /// если запрос с таким же идентификатором уже выполняется.
+        /// 
+        /// Выбрасывает <see cref="NoNetworkDownloaderException"/>
+        /// при отсутствии подключения к интернету
         /// </summary>
         /// <param name="request"></param>
         public void ExecuteRequest(DownloadRequest request)
         {
+            if (!NetworkInterface.GetIsNetworkAvailable())
+                throw new NoNetworkDownloaderException();
+
             if (ContainsRequest(request.ID))
-            {
-                /// TODO: выбросить исключение
-                throw new NotImplementedException("Если запрос уже в очереди, выбросить исключение");
-            }
+                throw new RequestAlreadyExistsDownloaderException($"Запрос с идентификатором '{request.ID.GetID()}' уже выполняется");
 
             request.Completed += OnRequestCompleted;
 
@@ -94,11 +89,25 @@ namespace LaserwarTest.Core.Networking.Downloading
         }
 
         /// <summary>
-        /// Возобновляет работу загрузчика, если он был приостановлен
+        /// Возобновляет работу загрузчика, если он был приостановлен.
+        /// 
+        /// Если на момент возобновления отсутствует интернет подключение,
+        /// будет выброшено <see cref="NoNetworkDownloaderException"/>,
+        /// а все выполняющиеся загрузки будут отменены
         /// </summary>
         public void Resume()
         {
             if (State != DownloaderState.Suspended) return;
+
+            if (!NetworkInterface.GetIsNetworkAvailable())
+            {
+                foreach (var request in Requests.Values)
+                    request.Cancel();
+
+                Requests.Clear();
+
+                throw new NoNetworkDownloaderException("При возобновлении загрузчика не обнаружился интернет! Все загрузки отменены!");
+            }
 
             foreach (var request in Requests.Values)
             {
