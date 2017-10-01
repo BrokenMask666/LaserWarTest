@@ -48,13 +48,13 @@ namespace LaserwarTest.Data.DB.Entities
         /// Размер файла в байтах
         /// </summary>
         [Column(ClmnNm_Size)]
+        [JsonProperty("size")]
         public int Size { set; get; }
 
         /// <summary>
         /// Указывает, что объект был загружен на устройство
         /// </summary>
-        [Column(ClmnNm_Size)]
-        [JsonProperty("size")]
+        [Column(ClmnNm_Downloaded)]
         public bool Downloaded { set; get; }
     }
 }
