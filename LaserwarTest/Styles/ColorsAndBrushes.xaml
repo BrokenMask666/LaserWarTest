@@ -1,0 +1,57 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:LaserwarTest.Styles"
+    >
+
+    <Color x:Key="LW_SideMenuPaneBackgroundColor">#373B3C</Color>
+    <Color x:Key="LW_SideMenuItemPointerOverBackgroundColor">#646B6C</Color>
+    <Color x:Key="LW_SideMenuItemPressedBackgroundColor">#151717</Color>
+
+
+    
+    <Color x:Key="LW_ButtonAccentBackgroundColor">#015AFF</Color>
+    <Color x:Key="LW_ButtonAccentPointerOverBackgroundColor">#6297FA</Color>
+    <Color x:Key="LW_ButtonAccentPressedBackgroundColor">#0644B8</Color>
+
+    <Color x:Key="LW_ButtonDisabledBackgroundColor">#D5D6D8</Color>
+    <Color x:Key="LW_ButtonDisabledForegroundColor">#A0A2A6</Color>
+
+
+
+    <Color x:Key="LW_TextBlockForegroundColor">#373B3C</Color>
+
+    <!--SideMenu brushes-->
+    <SolidColorBrush x:Key="LW_SideMenuPaneBackgroundBrush" Color="{StaticResource LW_SideMenuPaneBackgroundColor}"/>
+    <SolidColorBrush x:Key="LW_SideMenuItemPointerOverBackgroundBrush" Color="{StaticResource LW_SideMenuItemPointerOverBackgroundColor}"/>
+    <SolidColorBrush x:Key="LW_SideMenuItemPressedBackgroundBrush" Color="{StaticResource LW_SideMenuItemPressedBackgroundColor}"/>
+
+    <!--Button brushes-->
+    <SolidColorBrush x:Key="LW_ButtonBackgroundBrush" Color="Transparent"/>
+    <SolidColorBrush x:Key="LW_ButtonAccentBackgroundBrush" Color="{StaticResource LW_ButtonAccentBackgroundColor}"/>
+
+    <SolidColorBrush x:Key="LW_ButtonPointerOverBackgroundBrush" Color="{StaticResource LW_ButtonAccentPointerOverBackgroundColor}"/>
+    <SolidColorBrush x:Key="LW_ButtonAccentPointerOverBackgroundBrush" Color="{StaticResource LW_ButtonAccentPointerOverBackgroundColor}"/>
+
+    <SolidColorBrush x:Key="LW_ButtonPressedBackgroundBrush" Color="Transparent"/>
+    <SolidColorBrush x:Key="LW_ButtonAccentPressedBackgroundBrush" Color="{StaticResource LW_ButtonAccentPressedBackgroundColor}"/>
+
+    <SolidColorBrush x:Key="LW_ButtonDisabledBackgroundBrush" Color="{StaticResource LW_ButtonDisabledBackgroundColor}"/>
+    <SolidColorBrush x:Key="LW_ButtonAccentDisabledBackgroundBrush" Color="{StaticResource LW_ButtonDisabledBackgroundColor}"/>
+
+    <SolidColorBrush x:Key="LW_ButtonForegroundBrush" Color="{StaticResource LW_ButtonAccentBackgroundColor}"/>
+    <SolidColorBrush x:Key="LW_ButtonAccentForegroundBrush" Color="White"/>
+
+    <SolidColorBrush x:Key="LW_ButtonPointerOverForegroundBrush" Color="{StaticResource LW_ButtonAccentPointerOverBackgroundColor}"/>
+    <SolidColorBrush x:Key="LW_ButtonAccentPointerOverForegroundBrush" Color="White"/>
+
+    <SolidColorBrush x:Key="LW_ButtonPressedForegroundBrush" Color="{StaticResource LW_ButtonAccentPressedBackgroundColor}"/>
+    <SolidColorBrush x:Key="LW_ButtonAccentPressedForegroundBrush" Color="White"/>
+
+    <SolidColorBrush x:Key="LW_ButtonDisabledForegroundBrush" Color="{StaticResource LW_ButtonDisabledForegroundColor}"/>
+    <SolidColorBrush x:Key="LW_ButtonAccentDisabledForegroundBrush" Color="{StaticResource LW_ButtonDisabledForegroundColor}"/>
+
+    <!--TextBlock brushes-->
+    <SolidColorBrush x:Key="LW_TextBlockForegroundBrush" Color="{StaticResource LW_TextBlockForegroundColor}"/>
+
+</ResourceDictionary>

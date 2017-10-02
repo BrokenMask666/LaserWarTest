@@ -11,8 +11,27 @@
     >
 
     <Grid>
-        <layouts:PageLayout Background="White" Title="Загрузка">
-            
-        </layouts:PageLayout>
+        <layouts:PageLayoutTemplate Background="White" Title="Загрузка">
+            <StackPanel>
+                <TextBlock 
+                    Style="{StaticResource LW_TextBlockControlHeaderStyle}"
+                    Text="Адрес файла"
+                    />
+
+                <TextBlock 
+                    Style="{StaticResource LW_TextBlockDefaultStyle}"
+                    Text="Http://jfhgkjfhg.com"
+                    />
+
+                <ProgressBar
+                    Margin="0,5"
+                    Width="600"
+                    HorizontalAlignment="Left"
+                    Foreground="Blue" 
+                    Value="100"
+                    />
+
+            </StackPanel>
+        </layouts:PageLayoutTemplate>
     </Grid>
 </Page>

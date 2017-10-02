@@ -153,12 +153,8 @@
     <Compile Include="UI\Commands\Navigation\NavigationCommandBase.cs" />
     <Compile Include="UI\Controls\Extensions\ContentControlExtensions.cs" />
     <Compile Include="UI\Layouts\BackButton.cs" />
-    <Compile Include="UI\Layouts\PageLayout.xaml.cs">
-      <DependentUpon>PageLayout.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\Layouts\DialogLayout.xaml.cs">
-      <DependentUpon>DialogLayout.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="UI\Layouts\DialogLayoutTemplate.cs" />
+    <Compile Include="UI\Layouts\PageLayoutTemplate.cs" />
     <Compile Include="UI\Popups\Animations\ScalePopupCloseAnimation.cs" />
     <Compile Include="UI\Popups\Animations\ScalePopupOpenAnimation.cs" />
     <Compile Include="UI\Dialogs\ErrorDialog.xaml.cs">
@@ -232,13 +228,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UI\Layouts\PageLayout.xaml">
+    <Page Include="Styles\ColorsAndBrushes.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
-    <Page Include="UI\Layouts\DialogLayout.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="UI\Dialogs\ErrorDialog.xaml">
       <SubType>Designer</SubType>

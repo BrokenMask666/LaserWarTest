@@ -11,8 +11,8 @@
     >
 
     <Grid>
-        <layouts:PageLayout Background="White" Title="Звуки">
+        <layouts:PageLayoutTemplate Background="White" Title="Звуки">
 
-        </layouts:PageLayout>
+        </layouts:PageLayoutTemplate>
     </Grid>
 </Page>

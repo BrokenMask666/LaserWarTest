@@ -12,8 +12,8 @@
     >
 
     <Grid>
-        <layouts:PageLayout Background="White" Title="Детали игры">
-            <layouts:PageLayout.TitleRightContent>
+        <layouts:PageLayoutTemplate Background="White" Title="Детали игры">
+            <layouts:PageLayoutTemplate.TitleRightContent>
                 <StackPanel
                     Orientation="Horizontal"
                     HorizontalAlignment="Right"
@@ -32,8 +32,8 @@
                         />
 
                 </StackPanel>
-            </layouts:PageLayout.TitleRightContent>
+            </layouts:PageLayoutTemplate.TitleRightContent>
             
-        </layouts:PageLayout>
+        </layouts:PageLayoutTemplate>
     </Grid>
 </Page>

@@ -13,23 +13,24 @@
     xmlns:ext="using:LaserwarTest.UI.Controls.Extensions"
     >
 
-    <layouts:DialogLayout Background="White" Title="{x:Bind Title, Mode=OneWay}">
+    <layouts:DialogLayoutTemplate Background="White" Title="{x:Bind Title, Mode=OneWay}">
         <ScrollViewer VerticalScrollBarVisibility="Auto" VerticalScrollMode="Auto">
-            <TextBlock 
+            <TextBlock
+                Style="{StaticResource LW_TextBlockDefaultStyle}"
                 TextWrapping="Wrap"
                 Text="{x:Bind Message, Mode=OneWay}"
                 />
             
         </ScrollViewer>
 
-        <layouts:DialogLayout.CommandsBar>
+        <layouts:DialogLayoutTemplate.CommandsBar>
             <Button
                 Style="{StaticResource LW_ButtonAccentStyle}"
                 ext:ContentControlExtensions.UseUpperCaseProperty="True"
                 Content="закрыть"
                 Tapped="CloseButton_Tapped"
                 />
-        </layouts:DialogLayout.CommandsBar>
+        </layouts:DialogLayoutTemplate.CommandsBar>
 
-    </layouts:DialogLayout>
+    </layouts:DialogLayoutTemplate>
 </UserControl>
