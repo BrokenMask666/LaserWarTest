@@ -12,7 +12,7 @@
 
     <Grid>
         <layouts:PageLayoutTemplate Background="White" Title="Загрузка">
-            <StackPanel>
+            <StackPanel Width="500" HorizontalAlignment="Left">
                 <TextBlock 
                     Style="{StaticResource LW_TextBlockControlHeaderStyle}"
                     Text="Адрес файла"
@@ -25,11 +25,85 @@
 
                 <ProgressBar
                     Margin="0,5"
-                    Width="600"
-                    HorizontalAlignment="Left"
-                    Foreground="Blue" 
-                    Value="100"
+                    HorizontalAlignment="Stretch"
+                    Value="75" 
                     />
+
+                <ProgressBar
+                    Margin="0,5"
+                    HorizontalAlignment="Stretch"
+                    IsIndeterminate="True"
+                    Value="80" 
+                    />
+
+                <TextBox
+                    Style="{StaticResource TextBoxDefaultStyle}"
+                    Header="Имя игрока"
+                    Text="Игрок 1"
+                    />
+
+                <ScrollViewer
+                    Height="150">
+                    <StackPanel>
+                        <TextBlock Text="Типа текст"/>
+                        <TextBlock Text="Типа текст"/>
+                        <TextBlock Text="Типа текст"/>
+                        <TextBlock Text="Типа текст"/>
+                        <TextBlock Text="Типа текст"/>
+                        <TextBlock Text="Типа текст"/>
+                        <TextBlock Text="Типа текст"/>
+                        <TextBlock Text="Типа текст"/>
+                        <TextBlock Text="Типа текст"/>
+                        <TextBlock Text="Типа текст"/>
+                        <TextBlock Text="Типа текст"/>
+                        <TextBlock Text="Типа текст"/>
+                        <TextBlock Text="Типа текст"/>
+                        <TextBlock Text="Типа текст"/>
+                        <TextBlock Text="Типа текст"/>
+                        <TextBlock Text="Типа текст"/>
+                        <TextBlock Text="Типа текст"/>
+                        <TextBlock Text="Типа текст"/>
+                        <TextBlock Text="Типа текст"/>
+                        <TextBlock Text="Типа текст"/>
+                        <TextBlock Text="Типа текст"/>
+                    </StackPanel>
+                </ScrollViewer>
+
+                <ListView
+                    Margin="0,15,0,0"
+                    Height="120"
+                    >
+                    <ListViewItem>
+                        <TextBlock Text="ListViewItem"/>
+                    </ListViewItem>
+                    <ListViewItem>
+                        <TextBlock Text="ListViewItem"/>
+                    </ListViewItem>
+                    <ListViewItem>
+                        <TextBlock Text="ListViewItem"/>
+                    </ListViewItem>
+                    <ListViewItem>
+                        <TextBlock Text="ListViewItem"/>
+                    </ListViewItem>
+                    <ListViewItem>
+                        <TextBlock Text="ListViewItem"/>
+                    </ListViewItem>
+                    <ListViewItem>
+                        <TextBlock Text="ListViewItem"/>
+                    </ListViewItem>
+                    <ListViewItem>
+                        <TextBlock Text="ListViewItem"/>
+                    </ListViewItem>
+                    <ListViewItem>
+                        <TextBlock Text="ListViewItem"/>
+                    </ListViewItem>
+                    <ListViewItem>
+                        <TextBlock Text="ListViewItem"/>
+                    </ListViewItem>
+                    <ListViewItem>
+                        <TextBlock Text="ListViewItem"/>
+                    </ListViewItem>
+                </ListView>
 
             </StackPanel>
         </layouts:PageLayoutTemplate>

@@ -3,6 +3,12 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:LaserwarTest.Styles"
     >
+    
+    <Color x:Key="LW_ControlAccentColor">#015AFF</Color>
+    <Color x:Key="LW_ControlForegroundColor">#373B3C</Color>
+    <Color x:Key="LW_ControlDisabledBackgroundColor">#D5D6D8</Color>
+
+
 
     <Color x:Key="LW_SideMenuPaneBackgroundColor">#373B3C</Color>
     <Color x:Key="LW_SideMenuItemPointerOverBackgroundColor">#646B6C</Color>
@@ -19,7 +25,12 @@
 
 
 
-    <Color x:Key="LW_TextBlockForegroundColor">#373B3C</Color>
+
+    <!--Common brushes-->
+    <SolidColorBrush x:Key="LW_ControlAccentBrush" Color="{StaticResource LW_ControlAccentColor}"/>
+    <SolidColorBrush x:Key="LW_ControlForegroundBrush" Color="{StaticResource LW_ControlForegroundColor}"/>
+    <SolidColorBrush x:Key="LW_ControlDisabledBackgroundBrush" Color="{StaticResource LW_ControlDisabledBackgroundColor}"/>
+
 
     <!--SideMenu brushes-->
     <SolidColorBrush x:Key="LW_SideMenuPaneBackgroundBrush" Color="{StaticResource LW_SideMenuPaneBackgroundColor}"/>
@@ -52,6 +63,13 @@
     <SolidColorBrush x:Key="LW_ButtonAccentDisabledForegroundBrush" Color="{StaticResource LW_ButtonDisabledForegroundColor}"/>
 
     <!--TextBlock brushes-->
-    <SolidColorBrush x:Key="LW_TextBlockForegroundBrush" Color="{StaticResource LW_TextBlockForegroundColor}"/>
+    <SolidColorBrush x:Key="LW_TextBlockForegroundBrush" Color="{StaticResource LW_ControlForegroundColor}"/>
+
+    <!--TextBox brushes-->
+    <SolidColorBrush x:Key="LW_TextBoxBorderBrush" Color="{StaticResource LW_ControlAccentColor}"/>
+    <SolidColorBrush x:Key="LW_TextBoxPointerOverBorderBrush" Color="{StaticResource LW_ButtonAccentPointerOverBackgroundColor}"/>
+    <SolidColorBrush x:Key="LW_TextBoxFocusedBorderBrush" Color="{StaticResource LW_ButtonAccentPointerOverBackgroundColor}"/>
+    <SolidColorBrush x:Key="LW_TextBoxSelectionHighlightBrush" Color="{StaticResource LW_ButtonAccentPointerOverBackgroundColor}"/>
+
 
 </ResourceDictionary>
