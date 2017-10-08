@@ -16,6 +16,8 @@ namespace LaserwarTest.Data.DB
     {
         public SoundTable Sounds { get; }
 
+        public GameDataUrlTable GameDataUrls { get; }
+
         public GameTable Games { get; }
 
         public TeamTable Teams { get; }
@@ -29,6 +31,7 @@ namespace LaserwarTest.Data.DB
         {
             SetTables(
                 (Sounds = new SoundTable(this)),
+                (GameDataUrls = new GameDataUrlTable(this)),
                 (Games = new GameTable(this)),
                 (Teams = new TeamTable(this)),
                 (Players = new PlayerTable(this)));

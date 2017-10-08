@@ -101,6 +101,7 @@
             <ProgressRing
                 Width="60"
                 Height="60"
+                Foreground="White"
                 IsActive="True"
                 />
         </Grid>

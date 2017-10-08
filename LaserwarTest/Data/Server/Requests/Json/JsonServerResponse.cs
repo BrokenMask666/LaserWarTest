@@ -14,19 +14,14 @@ namespace LaserwarTest.Data.Server.Requests.Json
         public string Error { set; get; }
 
         [JsonProperty("games")]
-        public List<JsonGameDownloadData> Games { set; get; }
+        public List<GameDataUrlEntity> Games { set; get; }
 
         [JsonProperty("sounds")]
         public List<SoundEntity> Sounds { set; get; }
-    }
 
-    /// <summary>
-    /// Представляет данные о расположении загружаемых файлов
-    /// </summary>
-    [JsonObject(MemberSerialization.OptIn)]
-    public sealed class JsonGameDownloadData
-    {
-        [JsonProperty("url")]
-        public string Url { set; get; }
+        public static JsonServerResponse FromString(string jsonContent)
+        {
+            return JsonConvert.DeserializeObject<JsonServerResponse>(jsonContent);
+        }
     }
 }

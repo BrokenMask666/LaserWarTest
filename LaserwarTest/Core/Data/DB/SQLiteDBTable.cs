@@ -18,6 +18,8 @@ namespace LaserwarTest.Core.Data.DB
         string Name { get; }
 
         Task CreateOrUpdate(SQLiteAsyncConnection asyncConn);
+
+        Task Clear(SQLiteAsyncConnection asyncConn);
     }
 
     /// <summary>
@@ -94,6 +96,11 @@ namespace LaserwarTest.Core.Data.DB
         public async Task DeleteAll()
         {
             await DB.Connection.ExecuteAsyncAction(async (conn) => { await conn.DeleteAllAsync<TEntity>(); });
+        }
+
+        public async Task Clear(SQLiteAsyncConnection asyncConn)
+        {
+            await asyncConn.DeleteAllAsync<TEntity>();
         }
     }
 }

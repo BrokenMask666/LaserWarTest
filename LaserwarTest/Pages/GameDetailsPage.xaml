@@ -8,7 +8,6 @@
     mc:Ignorable="d"
     
     xmlns:layouts="using:LaserwarTest.UI.Layouts"
-    xmlns:ext="using:LaserwarTest.UI.Controls.Extensions"
     >
 
     <Grid>
@@ -20,13 +19,11 @@
                     >
                     <Button 
                         Style="{StaticResource LW_ButtonDefaultStyle}"
-                        ext:ContentControlExtensions.UseUpperCaseProperty="True"
                         Content="опубликовать в вк"
                         />
 
                     <Button
                         Style="{StaticResource LW_ButtonAccentStyle}" 
-                        ext:ContentControlExtensions.UseUpperCaseProperty="True"
                         Margin="10,0,0,0"
                         Content="сохранить как PDF"
                         />

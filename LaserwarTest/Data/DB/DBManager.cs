@@ -12,11 +12,12 @@ namespace LaserwarTest.Data.DB
     public sealed class DBManager
     {
         private static Lazy<DBManager> _instance = new Lazy<DBManager>(() => new DBManager(), true);
+        //private static DBManager _instance;
         /// <summary>
         /// Получает менеджер баз данных
         /// </summary>
         /// <returns></returns>
-        public static DBManager GetCurrent() => _instance.Value;
+        public static DBManager GetCurrent() => _instance.Value/*_instance ?? (_instance = new DBManager())*/;
 
         DBManager() { }
 

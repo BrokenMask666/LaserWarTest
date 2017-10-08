@@ -24,7 +24,10 @@ namespace LaserwarTest.UI.Controls.Extensions
             if (value)
             {
                 if (RegisterContentChangedCallback(obj))
+                {
+                    obj.Loaded += OnControlLoaded;
                     obj.Unloaded += OnControlUnloaded;
+                }
             }
             else
             {
@@ -32,7 +35,15 @@ namespace LaserwarTest.UI.Controls.Extensions
                     obj.Unloaded -= OnControlUnloaded;
             }
         }
-        
+
+        private static void OnControlLoaded(object sender, RoutedEventArgs e)
+        {
+            var obj = sender as ContentControl;
+            obj.Content = obj.Content;
+
+            obj.Loaded -= OnControlLoaded;
+        }
+
         private static void OnControlUnloaded(object sender, RoutedEventArgs e)
         {
             var obj = sender as ContentControl;
@@ -75,12 +86,12 @@ namespace LaserwarTest.UI.Controls.Extensions
             }
         }
 
-        public static bool GetUseUpperCaseProperty(ContentControl element)
+        public static bool GetUseUpperCase(ContentControl element)
         {
             return (bool)element.GetValue(UseUpperCaseProperty);
         }
 
-        public static void SetUseUpperCaseProperty(ContentControl element, bool value)
+        public static void SetUseUpperCase(ContentControl element, bool value)
         {
             element.SetValue(UseUpperCaseProperty, value);
         }

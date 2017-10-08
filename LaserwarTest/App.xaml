@@ -5,6 +5,7 @@
     xmlns:local="using:LaserwarTest"
     RequestedTheme="Light"
     
+    xmlns:ext="using:LaserwarTest.UI.Controls.Extensions"
     >
 
     <Application.Resources>
@@ -621,6 +622,7 @@
                 <Setter Property="Padding" Value="24,8,24,8"/>
                 <Setter Property="FontWeight" Value="Medium"/>
                 <Setter Property="FontSize" Value="12"/>
+                <Setter Property="ext:ContentControlExtensions.UseUpperCase" Value="True"/>
             </Style>
             <Style x:Key="LW_ButtonDefaultStyle" TargetType="Button" BasedOn="{StaticResource LW_ButtonBaseStyle}">
                 <Setter Property="Background" Value="{ThemeResource LW_ButtonBackgroundBrush}"/>

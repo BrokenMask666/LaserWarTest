@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LaserwarTest.Presentation;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -22,9 +23,21 @@ namespace LaserwarTest.Pages
     /// </summary>
     public sealed partial class DownloadPage : Page
     {
+        VMDownload VMDownload { get; } = new VMDownload();
+
         public DownloadPage()
         {
             InitializeComponent();
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            VMDownload.CheckDataDownloadedStatus();
+        }
+
+        private void DownloadFileButton_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            VMDownload.DownloadFile();
         }
     }
 }

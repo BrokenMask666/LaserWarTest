@@ -104,8 +104,9 @@ namespace LaserwarTest.Core.Data.DB
         }
 
         /// <summary>
-        /// Полность удаляет файл базы данных с устройства,
-        /// если она существует
+        /// Полность удаляет файл базы данных с устройства, если она существует
+        /// 
+        /// <para>ПОСЛЕ ВЫЗОВА МЕТОДА <see cref="Init(bool)"/> УДАЛЕНИЕ ВЫЗЫВАЕТ <see cref="UnauthorizedAccessException"/></para>
         /// </summary>
         /// <returns></returns>
         public async Task DeleteIfExists()
@@ -115,8 +116,23 @@ namespace LaserwarTest.Core.Data.DB
                 var file = await ApplicationData.Current.LocalFolder.GetFileAsync(Connection.Path);
                 await file.DeleteAsync(StorageDeleteOption.PermanentDelete);
             }
-            catch (FileNotFoundException) {  }
+            catch (FileNotFoundException) { }
             finally { await DBInfoLocal.Delete(); }
+        }
+
+        /// <summary>
+        /// Очищает все имеющиеся данные
+        /// </summary>
+        /// <returns></returns>
+        public async Task Clear()
+        {
+            await Connection.ExecuteAsyncAction(async (asyncConn) =>
+            {
+                foreach (ISQLiteDBTable table in Tables)
+                    await table.Clear(asyncConn);
+
+                await asyncConn.ExecuteAsync("VACUUM");
+            });
         }
 
         protected virtual Task OnCreate(DBInfo info) { return Task.Delay(0); }

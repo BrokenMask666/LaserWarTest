@@ -23,7 +23,8 @@ namespace LaserwarTest.Core.Networking.Server.Requests
 
         protected GetStringRequest(GetStringRequestResult result, string response)
         {
-
+            Result = result;
+            Response = response;
         }
 
         /// <summary>

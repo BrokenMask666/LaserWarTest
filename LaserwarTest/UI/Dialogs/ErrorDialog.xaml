@@ -10,7 +10,6 @@
     d:DesignWidth="600"
     
     xmlns:layouts="using:LaserwarTest.UI.Layouts"
-    xmlns:ext="using:LaserwarTest.UI.Controls.Extensions"
     >
 
     <layouts:DialogLayoutTemplate Background="White" Title="{x:Bind Title, Mode=OneWay}">
@@ -26,7 +25,6 @@
         <layouts:DialogLayoutTemplate.CommandsBar>
             <Button
                 Style="{StaticResource LW_ButtonAccentStyle}"
-                ext:ContentControlExtensions.UseUpperCaseProperty="True"
                 Content="закрыть"
                 Tapped="CloseButton_Tapped"
                 />

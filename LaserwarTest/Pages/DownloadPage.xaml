@@ -8,104 +8,96 @@
     mc:Ignorable="d"
     
     xmlns:layouts="using:LaserwarTest.UI.Layouts"
+    xmlns:ext="using:LaserwarTest.UI.Controls.Extensions"
+    
+    xmlns:converters="using:LaserwarTest.Commons.UI.Xaml.Converters"
     >
+
+    <Page.Resources>
+        <converters:TextToVisibilityConverter x:Key="TextToVisibilityConverter"/>
+    </Page.Resources>
 
     <Grid>
         <layouts:PageLayoutTemplate Background="White" Title="Загрузка">
-            <StackPanel Width="500" HorizontalAlignment="Left">
-                <TextBlock 
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel
+                    Orientation="Horizontal" 
+                    Margin="0,0,0,150"
+                    VerticalAlignment="Top"
+                    >
+                    <TextBox
+                        Style="{StaticResource TextBoxDefaultStyle}"
+                        Width="500"
+                        Header="Адрес файла"
+                        Text="{x:Bind VMDownload.FileUrl, Mode=TwoWay}"
+                        />
+
+                    <Button
+                        Style="{StaticResource LW_ButtonAccentStyle}"
+                        VerticalAlignment="Bottom"
+                        Margin="15,0,0,0"
+                        Content="загрузить"
+                        Tapped="DownloadFileButton_Tapped"
+                        />
+
+                    <TextBlock
+                        Style="{StaticResource LW_TextBlockControlHeaderStyle}"
+                        VerticalAlignment="Bottom"
+                        Margin="30,0,0,10"
+                        Text="{x:Bind VMDownload.Status, Mode=OneWay}"
+                        />
+
+                </StackPanel>
+
+                <TextBlock
+                    Grid.Row="1"
                     Style="{StaticResource LW_TextBlockControlHeaderStyle}"
-                    Text="Адрес файла"
-                    />
-
-                <TextBlock 
-                    Style="{StaticResource LW_TextBlockDefaultStyle}"
-                    Text="Http://jfhgkjfhg.com"
-                    />
-
-                <ProgressBar
+                    Text="Содержимое JSON-объекта"
                     Margin="0,5"
-                    HorizontalAlignment="Stretch"
-                    Value="75" 
-                    />
-
-                <ProgressBar
-                    Margin="0,5"
-                    HorizontalAlignment="Stretch"
-                    IsIndeterminate="True"
-                    Value="80" 
-                    />
-
-                <TextBox
-                    Style="{StaticResource TextBoxDefaultStyle}"
-                    Header="Имя игрока"
-                    Text="Игрок 1"
+                    Visibility="{x:Bind VMDownload.JsonContent, Mode=OneWay, Converter={StaticResource TextToVisibilityConverter}}"
                     />
 
                 <ScrollViewer
-                    Height="150">
-                    <StackPanel>
-                        <TextBlock Text="Типа текст"/>
-                        <TextBlock Text="Типа текст"/>
-                        <TextBlock Text="Типа текст"/>
-                        <TextBlock Text="Типа текст"/>
-                        <TextBlock Text="Типа текст"/>
-                        <TextBlock Text="Типа текст"/>
-                        <TextBlock Text="Типа текст"/>
-                        <TextBlock Text="Типа текст"/>
-                        <TextBlock Text="Типа текст"/>
-                        <TextBlock Text="Типа текст"/>
-                        <TextBlock Text="Типа текст"/>
-                        <TextBlock Text="Типа текст"/>
-                        <TextBlock Text="Типа текст"/>
-                        <TextBlock Text="Типа текст"/>
-                        <TextBlock Text="Типа текст"/>
-                        <TextBlock Text="Типа текст"/>
-                        <TextBlock Text="Типа текст"/>
-                        <TextBlock Text="Типа текст"/>
-                        <TextBlock Text="Типа текст"/>
-                        <TextBlock Text="Типа текст"/>
-                        <TextBlock Text="Типа текст"/>
-                    </StackPanel>
+                    Grid.Row="2"
+                    VerticalAlignment="Bottom"
+                    Margin="0,0,0,25"
+                    >
+                    <TextBlock
+                        TextWrapping="Wrap"
+                        Text="{x:Bind VMDownload.JsonContent, Mode=OneWay}"
+                        />
                 </ScrollViewer>
 
-                <ListView
-                    Margin="0,15,0,0"
-                    Height="120"
-                    >
-                    <ListViewItem>
-                        <TextBlock Text="ListViewItem"/>
-                    </ListViewItem>
-                    <ListViewItem>
-                        <TextBlock Text="ListViewItem"/>
-                    </ListViewItem>
-                    <ListViewItem>
-                        <TextBlock Text="ListViewItem"/>
-                    </ListViewItem>
-                    <ListViewItem>
-                        <TextBlock Text="ListViewItem"/>
-                    </ListViewItem>
-                    <ListViewItem>
-                        <TextBlock Text="ListViewItem"/>
-                    </ListViewItem>
-                    <ListViewItem>
-                        <TextBlock Text="ListViewItem"/>
-                    </ListViewItem>
-                    <ListViewItem>
-                        <TextBlock Text="ListViewItem"/>
-                    </ListViewItem>
-                    <ListViewItem>
-                        <TextBlock Text="ListViewItem"/>
-                    </ListViewItem>
-                    <ListViewItem>
-                        <TextBlock Text="ListViewItem"/>
-                    </ListViewItem>
-                    <ListViewItem>
-                        <TextBlock Text="ListViewItem"/>
-                    </ListViewItem>
-                </ListView>
+                <TextBlock
+                    Grid.Row="3"
+                    Style="{StaticResource LW_TextBlockControlHeaderStyle}"
+                    Margin="0,5"
+                    Text="Файлы с данными об играх"
+                    Visibility="{x:Bind VMDownload.GameDataFilesInfo, Mode=OneWay, Converter={StaticResource TextToVisibilityConverter}}"
+                    />
 
-            </StackPanel>
+                <ScrollViewer 
+                    Grid.Row="4"
+                    VerticalAlignment="Bottom"
+                    Margin="0,0,0,25"
+                    MaxHeight="250"
+                    >
+                    <TextBlock
+                        TextWrapping="Wrap"
+                        SelectionHighlightColor="{ThemeResource LW_TextBoxSelectionHighlightBrush}"
+                        IsTextSelectionEnabled="True"
+                        Text="{x:Bind VMDownload.GameDataFilesInfo, Mode=OneWay}"
+                        />
+                </ScrollViewer>
+            </Grid>
         </layouts:PageLayoutTemplate>
     </Grid>
 </Page>
