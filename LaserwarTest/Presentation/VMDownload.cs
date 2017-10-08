@@ -3,6 +3,7 @@ using LaserwarTest.Core.Networking.Server.Requests;
 using LaserwarTest.Data.DB;
 using LaserwarTest.Data.DB.Entities;
 using LaserwarTest.Data.Server.Requests.Json;
+using LaserwarTest.Data.Server.Requests.Xml;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -57,20 +58,53 @@ namespace LaserwarTest.Presentation
 
             LocalDB localDB = DBManager.GetLocalDB();
             _gameDataUrls = await localDB.GameDataUrls.GetAll();
-            if (_gameDataUrls.Count != 0)
-            {
-                UpdateGameDataFilesInfo(_gameDataUrls);
-            }
 
+            UpdateGameDataFilesInfo();
             Loaded();
         }
 
-        private void UpdateGameDataFilesInfo(List<GameDataUrlEntity> gameDataUrls)
+        private void UpdateGameDataFilesInfo()
         {
-            IEnumerable<string> gameDataFilesInfos = gameDataUrls.Select(x =>
-                $"Имя файла: {x.Name}\nАдрес файла: {x.URL}\nСтатус: {((x.Downloaded) ? "Загружен" : "Не загружен")}\n______________________________");
+            if (_gameDataUrls.Count > 0 && !_gameDataUrls.Any(x => x.Downloaded))
+            {
+                IEnumerable<string> gameDataFilesInfos = _gameDataUrls.Select(x =>
+                    $"Имя файла: {x.Name}\nАдрес файла: {x.URL}\nСтатус: {((x.Downloaded) ? "Загружен" : "Не загружен")}\n______________________________");
 
-            GameDataFilesInfo = string.Join("\n", gameDataFilesInfos);
+                GameDataFilesInfo = string.Join("\n", gameDataFilesInfos);
+                return;
+            }
+
+            GameDataFilesInfo = "";
+        }
+
+        private async Task<GetStringRequest> HandleRequest(string url, bool ignoreErrors = false)
+        {
+            GetStringRequest request = await GetStringRequest.Execute(url);
+            switch (request.Result)
+            {
+                case GetStringRequestResult.NoNetworkConnection:
+                    if (!ignoreErrors)
+                        ShowError("Нет подключения к интернету", "Проверьте подключение к интернету и повторите попытку");
+
+                    return null;
+
+                case GetStringRequestResult.Error:
+                    if (!ignoreErrors)
+                        ShowError("Не удалось загрузить данные");
+
+                    return null;
+
+                case GetStringRequestResult.NoResponse:
+                    if (!ignoreErrors)
+                        ShowError("Удаленыый сервер не отвечает");
+
+                    return null;
+
+                case GetStringRequestResult.Cancelled:
+                    return null;
+            }
+
+            return request;
         }
 
         public async Task DownloadFile()
@@ -95,23 +129,13 @@ namespace LaserwarTest.Presentation
             Status = "Получение данных от сервера...";
             await Loading(60);
 
-            GetStringRequest request = await GetStringRequest.Execute(FileUrl);
-            switch (request.Result)
+            GetStringRequest request = await HandleRequest(FileUrl);
+            if (request == null)
             {
-                case GetStringRequestResult.NoNetworkConnection:
-                    ShowError("Нет подключения к интернету", "Проверьте подключение к интернету и повторите попытку");
-                    return;
+                Status = "Ошибка получения данных";
+                Loaded();
 
-                case GetStringRequestResult.Error:
-                    ShowError("Не удалось загрузить данные");
-                    return;
-
-                case GetStringRequestResult.NoResponse:
-                    ShowError("Удаленыый сервер не отвечает");
-                    return;
-
-                case GetStringRequestResult.Cancelled:
-                    return;
+                return;
             }
 
             JsonContent = request.Response;
@@ -133,13 +157,84 @@ namespace LaserwarTest.Presentation
                 return;
             }
 
+            _gameDataUrls = serverResponse.Games;
+
             LocalDB localDB = DBManager.GetLocalDB();
             await localDB.Clear();
 
             await localDB.Sounds.InsertAll(serverResponse.Sounds);
             await localDB.GameDataUrls.InsertAll(serverResponse.Games);
 
-            UpdateGameDataFilesInfo(serverResponse.Games);
+            bool hasErrors = false;
+            foreach (var gameDataUrl in serverResponse.Games)
+            {
+                FileUrl = gameDataUrl.URL;
+                Status = "Файл загружается...";
+                await Task.Delay(60);
+
+                GetStringRequest xmlRequest = await HandleRequest(gameDataUrl.URL, ignoreErrors: true);
+                if (xmlRequest == null)
+                {
+                    hasErrors = true;
+                    Status = "Ошибка загрузки файла";
+                    continue;
+                }
+
+                XmlGameData gameData = XmlGameData.FromString(xmlRequest.Response);
+                await HandleXml(gameData, gameDataUrl);
+            }
+
+            if (hasErrors)
+            {
+                ShowError("Во время загрузки некоторых файлов возникли ошибки.\nПопробуйте загрузить их вручную");
+            }
+
+            UpdateGameDataFilesInfo();
+        }
+
+        private async Task HandleXml(XmlGameData gameData, GameDataUrlEntity gameDataUrlEntity)
+        {
+            Status = "Файл обрабатывается...";
+
+            GameEntity gameEntity = new GameEntity()
+            {
+                Name = gameData.Name,
+                Date = gameData.Date,
+            };
+
+            LocalDB localDB = DBManager.GetLocalDB();
+            await localDB.Games.Insert(gameEntity);
+
+            List<PlayerEntity> playerEntities = new List<PlayerEntity>();
+            foreach (var teamData in gameData.Teams)
+            {
+                TeamEntity teamEntity = new TeamEntity()
+                {
+                    GameID = gameEntity.ID,
+
+                    Name = teamData.Name,
+                };
+
+                await localDB.Teams.Insert(teamEntity);
+
+                foreach (var playerData in teamData.Players)
+                {
+                    playerEntities.Add(new PlayerEntity()
+                    {
+                        TeamID = teamEntity.ID,
+
+                        Name = playerData.Name,
+                        Rating = playerData.Rating,
+                        Accuracy = playerData.Accuracy,
+                        Shots = playerData.Shots,
+                    });
+                }
+            }
+
+            await localDB.Players.InsertAll(playerEntities);
+
+            gameDataUrlEntity.Downloaded = true;
+            await localDB.GameDataUrls.Update(gameDataUrlEntity);
         }
 
         private async Task DownloadXml()
@@ -150,8 +245,34 @@ namespace LaserwarTest.Presentation
                 ShowError(
                     "Указанный файл не найден",
                     "Невозможно загрузить файл, поскольку данные о файле отсутсвуют.\nПопробуйте загрузить JSON с данными");
+
                 return;
             }
+
+            if (gameDataUrl.Downloaded)
+            {
+                ShowError("Указанный файл уже загружен", "Файл уже загружен");
+                return;
+            }
+
+            Status = "Файл загружается...";
+            await Loading(60);
+
+            GetStringRequest request = await HandleRequest(gameDataUrl.URL);
+            if (request == null)
+            {
+                Status = "Не удалось загрузить файл";
+                Loaded();
+                return;
+            }
+
+            XmlGameData gameData = XmlGameData.FromString(request.Response);
+            await HandleXml(gameData, gameDataUrl);
+
+            UpdateGameDataFilesInfo();
+
+            Status = "Файл успешно загружен";
+            Loaded();
         }
     }
 }

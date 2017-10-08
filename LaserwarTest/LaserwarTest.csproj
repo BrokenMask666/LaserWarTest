@@ -135,6 +135,7 @@
     <Compile Include="Data\DB\Tables\SoundTable.cs" />
     <Compile Include="Data\DB\Tables\TeamTable.cs" />
     <Compile Include="Data\Server\Requests\Json\JsonServerResponse.cs" />
+    <Compile Include="Data\Server\Requests\Xml\XmlGameData.cs" />
     <Compile Include="Helpers\VisualTreeExplorer.cs" />
     <Compile Include="Pages\AppShell.xaml.cs">
       <DependentUpon>AppShell.xaml</DependentUpon>
@@ -157,6 +158,7 @@
     <Compile Include="UI\Commands\Navigation\BackCommand.cs" />
     <Compile Include="UI\Commands\Navigation\NavigationCommandBase.cs" />
     <Compile Include="UI\Controls\Extensions\ContentControlExtensions.cs" />
+    <Compile Include="UI\Controls\Extensions\TextBoxExtensions.cs" />
     <Compile Include="UI\Layouts\BackButton.cs" />
     <Compile Include="UI\Layouts\DialogLayoutTemplate.cs" />
     <Compile Include="UI\Layouts\PageLayoutTemplate.cs" />

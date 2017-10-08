@@ -6,7 +6,7 @@ namespace LaserwarTest.Data.DB.Entities
     /// <summary>
     /// Представляет хранящуюся в БД информацию об игроке
     /// </summary>
-    [Table("Teams")]
+    [Table("Players")]
     public sealed class PlayerEntity : ISQLiteDBEntity<int>
     {
         #region ColumnNames

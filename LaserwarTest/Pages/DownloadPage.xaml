@@ -37,6 +37,7 @@
                         Style="{StaticResource TextBoxDefaultStyle}"
                         Width="500"
                         Header="Адрес файла"
+                        ext:TextBoxExtensions.SelectTextOnFocus="True"
                         Text="{x:Bind VMDownload.FileUrl, Mode=TwoWay}"
                         />
 
