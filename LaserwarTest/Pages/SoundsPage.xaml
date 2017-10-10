@@ -8,10 +8,102 @@
     mc:Ignorable="d"
     
     xmlns:layouts="using:LaserwarTest.UI.Layouts"
+    xmlns:controls="using:LaserwarTest.UI.Controls"
+    
+    xmlns:sounds="using:LaserwarTest.Presentation.Sounds"
     >
 
     <Grid>
         <layouts:PageLayoutTemplate Background="White" Title="Звуки">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="65"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" MinWidth="300" MaxWidth="300"/>
+                        <ColumnDefinition Width="auto" MinWidth="200" MaxWidth="200"/>
+                        <ColumnDefinition Width="auto" MinWidth="200" MaxWidth="200"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock
+                        Grid.Column="0"
+                        Style="{StaticResource LW_TextBlockControlHeaderStyle}"
+                        Text="Имя файла"
+                        />
+
+                    <TextBlock
+                        Grid.Column="1"
+                        Style="{StaticResource LW_TextBlockControlHeaderStyle}"
+                        Text="Размер файла"
+                        />
+
+                    <TextBlock
+                        Grid.Column="2"
+                        Style="{StaticResource LW_TextBlockControlHeaderStyle}"
+                        Text="Загрузка файла"
+                        />
+
+                    <TextBlock
+                        Grid.Column="3"
+                        Style="{StaticResource LW_TextBlockControlHeaderStyle}"
+                        Text="Воспроизвести"
+                        />
+                </Grid>
+
+                <ListView
+                    Grid.Row="1"
+                    SelectionMode="None"
+                    ItemsSource="{x:Bind VMSounds.Items, Mode=OneWay}"
+                    >
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            <Setter Property="Padding" Value="0"/>
+                            <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                            <Setter Property="BorderBrush" Value="{ThemeResource LW_ControlDisabledBackgroundColor}"/>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="sounds:Sound">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto" MinWidth="300"/>
+                                    <ColumnDefinition Width="auto" MinWidth="200"/>
+                                    <ColumnDefinition Width="auto" MinWidth="200"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock
+                                    Grid.Column="0"
+                                    Style="{StaticResource LW_TextBlockDefaultStyle}"
+                                    Text="{x:Bind Name, Mode=OneTime}"
+                                    />
+
+                                <TextBlock
+                                    Grid.Column="1"
+                                    Style="{StaticResource LW_TextBlockDefaultStyle}"
+                                    Text="{x:Bind Size.DisplayText, Mode=OneTime}"
+                                    />
+
+                                <controls:DownloadIconButton
+                                    Grid.Column="2"
+                                    HorizontalAlignment="Left"
+                                    />
+
+                                <controls:SoundPlayerIconButton
+                                    Grid.Column="3"
+                                    HorizontalAlignment="Left"
+                                    />
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
 
         </layouts:PageLayoutTemplate>
     </Grid>

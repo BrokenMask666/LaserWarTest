@@ -1,8 +1,12 @@
-﻿using System;
+﻿using LaserwarTest.Presentation.Sounds;
+using LaserwarTest.UI.Controls;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -22,9 +26,16 @@ namespace LaserwarTest.Pages
     /// </summary>
     public sealed partial class SoundsPage : Page
     {
+        VMSounds VMSounds { get; } = new VMSounds();
+
         public SoundsPage()
         {
             InitializeComponent();
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            VMSounds.Load();
         }
     }
 }

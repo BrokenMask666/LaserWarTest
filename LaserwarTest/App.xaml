@@ -759,7 +759,6 @@
             </Style>
 
 
-
             <Style x:Key="TextBoxDefaultStyle" TargetType="TextBox">
                 <Setter Property="MinWidth" Value="{ThemeResource TextControlThemeMinWidth}"/>
                 <Setter Property="MinHeight" Value="{ThemeResource TextControlThemeMinHeight}"/>
@@ -976,6 +975,11 @@
                 </Setter>
             </Style>
 
+
+            <!--Глобальный стиль для ContentPresenter-->
+            <Style TargetType="ContentPresenter" BasedOn="{StaticResource LW_ContentPresenterDefaultStyle}">
+                <Setter Property="Foreground" Value="{StaticResource LW_TextBlockForegroundBrush}"/>
+            </Style>
 
         </ResourceDictionary>
     </Application.Resources>
