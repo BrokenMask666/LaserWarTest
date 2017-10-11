@@ -59,15 +59,6 @@
                     SelectionMode="None"
                     ItemsSource="{x:Bind VMSounds.Items, Mode=OneWay}"
                     >
-                    <ListView.ItemContainerStyle>
-                        <Style TargetType="ListViewItem">
-                            <Setter Property="HorizontalAlignment" Value="Stretch"/>
-                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                            <Setter Property="Padding" Value="0"/>
-                            <Setter Property="BorderThickness" Value="0,0,0,1"/>
-                            <Setter Property="BorderBrush" Value="{ThemeResource LW_ControlDisabledBackgroundColor}"/>
-                        </Style>
-                    </ListView.ItemContainerStyle>
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="sounds:Sound">
                             <Grid>

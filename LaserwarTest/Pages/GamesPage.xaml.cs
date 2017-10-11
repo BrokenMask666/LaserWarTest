@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LaserwarTest.Presentation.Games;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -22,14 +23,16 @@ namespace LaserwarTest.Pages
     /// </summary>
     public sealed partial class GamesPage : Page
     {
+        public VMGames VMGames { get; } = new VMGames();
+
         public GamesPage()
         {
             InitializeComponent();
         }
 
-        private void Button_Tapped(object sender, TappedRoutedEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            Frame.Navigate(typeof(GameDetailsPage));
+            VMGames.Load();
         }
     }
 }

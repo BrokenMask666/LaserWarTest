@@ -8,20 +8,23 @@ namespace LaserwarTest.Data.Server.Requests.Xml
     [XmlRoot("game")]
     public class XmlGameData
     {
-        long _dateAsTicksUtc;
+        long _unixTime;
 
         [XmlAttribute("name")]
         public string Name { set; get; }
 
         [XmlAttribute("date")]
-        public long DateAsTicksUtc
+        public long UnixTime
         {
             set
             {
-                _dateAsTicksUtc = value;
-                Date = new DateTime(_dateAsTicksUtc).ToLocalTime();
+                _unixTime = value;
+
+                Date = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
+                    .AddSeconds(_unixTime)
+                    .ToLocalTime();
             }
-            get { return _dateAsTicksUtc; }
+            get { return _unixTime; }
         }
 
         [XmlIgnore]

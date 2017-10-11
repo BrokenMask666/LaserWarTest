@@ -8,18 +8,81 @@
     mc:Ignorable="d"
     
     xmlns:layouts="using:LaserwarTest.UI.Layouts"
+    xmlns:controls="using:LaserwarTest.UI.Controls"
+    
+    xmlns:games="using:LaserwarTest.Presentation.Games"
     >
 
     <Grid>
         <layouts:PageLayoutTemplate Background="White" Title="Игры">
-            <Button
-                Style="{StaticResource LW_ButtonAccentStyle}"
-                VerticalAlignment="Center"
-                HorizontalAlignment="Center"
-                Content="Детализация"
-                Tapped="Button_Tapped"
-                Margin="200,80"
-                />
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="65"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" MinWidth="400"/>
+                        <ColumnDefinition Width="auto" MinWidth="300"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock
+                        Grid.Column="0"
+                        Style="{StaticResource LW_TextBlockControlHeaderStyle}"
+                        Text="Название игры"
+                        />
+
+                    <TextBlock
+                        Grid.Column="1"
+                        Style="{StaticResource LW_TextBlockControlHeaderStyle}"
+                        Text="Дата проведения"
+                        />
+
+                    <TextBlock
+                        Grid.Column="2"
+                        Style="{StaticResource LW_TextBlockControlHeaderStyle}"
+                        Text="Количество игроков"
+                        />
+                </Grid>
+
+                <ListView
+                    Grid.Row="1"
+                    SelectionMode="None"
+                    ItemsSource="{x:Bind VMGames.Items, Mode=OneWay}"
+                    >
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="games:Game">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto" MinWidth="400"/>
+                                    <ColumnDefinition Width="auto" MinWidth="300"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock
+                                    Grid.Column="0"
+                                    Style="{StaticResource LW_TextBlockDefaultStyle}"
+                                    Text="{x:Bind Name, Mode=OneTime}"
+                                    />
+
+                                <TextBlock
+                                    Grid.Column="1"
+                                    Style="{StaticResource LW_TextBlockDefaultStyle}"
+                                    Text="{x:Bind Date, Mode=OneTime}"
+                                    />
+
+                                <TextBlock
+                                    Grid.Column="2"
+                                    Style="{StaticResource LW_TextBlockDefaultStyle}"
+                                    Text="{x:Bind PlayersCount, Mode=OneTime}"
+                                    />
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
 
         </layouts:PageLayoutTemplate>
     </Grid>

@@ -155,6 +155,8 @@
     </Compile>
     <Compile Include="Presentation\BaseViewModel.cs" />
     <Compile Include="Presentation\Common\FileSizePresenter.cs" />
+    <Compile Include="Presentation\Games\Game.cs" />
+    <Compile Include="Presentation\Games\VMGames.cs" />
     <Compile Include="Presentation\Sounds\Sound.cs" />
     <Compile Include="Presentation\Sounds\SoundDownloadingInfo.cs" />
     <Compile Include="Presentation\Sounds\SoundPlayingInfo.cs" />

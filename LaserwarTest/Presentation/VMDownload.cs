@@ -138,9 +138,9 @@ namespace LaserwarTest.Presentation
                 return;
             }
 
-            JsonContent = request.Response;
+            JsonServerResponse serverResponse = JsonServerResponse.FromString(request.Response);
+            JsonContent = serverResponse.GetOriginalJson();
 
-            JsonServerResponse serverResponse = JsonServerResponse.FromString(JsonContent);
             await HandleJson(serverResponse);
 
             Status = "Данные получены";

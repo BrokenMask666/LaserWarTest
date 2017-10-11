@@ -34,7 +34,7 @@
                     VerticalAlignment="Top"
                     >
                     <TextBox
-                        Style="{StaticResource TextBoxDefaultStyle}"
+                        Style="{StaticResource LW_TextBoxDefaultStyle}"
                         Width="500"
                         Header="Адрес файла"
                         ext:TextBoxExtensions.SelectTextOnFocus="True"
