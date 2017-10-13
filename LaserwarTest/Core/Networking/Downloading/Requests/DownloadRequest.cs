@@ -8,11 +8,6 @@ using Windows.Storage;
 namespace LaserwarTest.Core.Networking.Downloading.Requests
 {
     /// <summary>
-    /// Представляет метод, выполняющийся по завершении процесса выполнения запроса загрузки
-    /// </summary>
-    public delegate void DownloadRequestCompletedHandler();
-
-    /// <summary>
     /// Представляет идентификатор отдельного запроса на загрузку данных
     /// </summary>
     public class DownloadRequestID
@@ -32,6 +27,7 @@ namespace LaserwarTest.Core.Networking.Downloading.Requests
     public class DownloadRequest
     {
         RequestState _state;
+        int _progress;
 
         /// <summary>
         /// Происходит при каждом изменении состояния запроса
@@ -54,11 +50,27 @@ namespace LaserwarTest.Core.Networking.Downloading.Requests
         /// <summary>
         /// Получает адрес запрашиваемого файла
         /// </summary>
-        public string RequestUri { get; }
+        public string RequestUrl { get; }
         /// <summary>
-        /// Получает целевой файл
+        /// Получает имя целевого файла в локальном хранилище
         /// </summary>
-        public StorageFile DestinationFile { get; }
+        public string DestinationFileName { get; }
+
+        /// <summary>
+        /// Получает процент завершения запроса
+        /// </summary>
+        public int Progress
+        {
+            private set
+            {
+                if (value < 0) value = 0;
+                if (value > 100) value = 100;
+
+                _progress = value;
+                ProgressChanged?.Invoke(this, new DownloadRequestProgressChangedEventArgs(ID, value));
+            }
+            get { return _progress; }
+        }
 
         /// <summary>
         /// Предоставляет токен отмены выполнения запроса
@@ -72,11 +84,6 @@ namespace LaserwarTest.Core.Networking.Downloading.Requests
         /// Получает текущую операцию загрузки
         /// </summary>
         DownloadOperation DownloadOperation { set; get; }
-
-        /// <summary>
-        /// Получает метод, выполняющийся по завершении выполнения запроса
-        /// </summary>
-        DownloadRequestCompletedHandler OnCompletedHandler { get; }
 
         /// <summary>
         /// Получает состояние запроса
@@ -98,12 +105,11 @@ namespace LaserwarTest.Core.Networking.Downloading.Requests
         /// </summary>
         public bool CanBeCanceled { get { return _state == RequestState.Processing || _state == RequestState.Paused; } }
 
-        public DownloadRequest(DownloadRequestID id, string requestUri, StorageFile destinationFile, DownloadRequestCompletedHandler onCompleted = null)
+        public DownloadRequest(DownloadRequestID id, string requestUrl, string destinationFileName)
         {
             ID = id;
-            RequestUri = requestUri;
-            DestinationFile = destinationFile;
-            OnCompletedHandler = onCompleted;
+            RequestUrl = requestUrl;
+            DestinationFileName = destinationFileName.Replace('/', '\\');
         }
 
         /// <summary>
@@ -115,7 +121,7 @@ namespace LaserwarTest.Core.Networking.Downloading.Requests
             if (State != RequestState.Default) return;
 
             State = RequestState.Processing;
-            ReportProgress(0);
+            Progress = 0;
 
             Progress<DownloadOperation> progress = new Progress<DownloadOperation>(
                 (DownloadOperation operation) =>
@@ -123,28 +129,29 @@ namespace LaserwarTest.Core.Networking.Downloading.Requests
                     int progressPercentage = (int)(100 * ((double)operation.Progress.BytesReceived / operation.Progress.TotalBytesToReceive));
                     Debug.WriteLine($"Persantage = {progressPercentage}");
 
-                    ReportProgress(progressPercentage);
+                    Progress = progressPercentage;
                 });
 
+            StorageFile destinationFile = await ApplicationData.Current.LocalFolder.CreateFileAsync(DestinationFileName, CreationCollisionOption.ReplaceExisting);
 
             DownloadClient = new BackgroundDownloader();
             CancellationToken = new CancellationTokenSource();
 
-            DownloadOperation = DownloadClient.CreateDownload(new Uri(RequestUri), DestinationFile);
+            DownloadOperation = DownloadClient.CreateDownload(new Uri(RequestUrl), destinationFile);
+
             try
             {
                 await DownloadOperation.StartAsync().AsTask(CancellationToken.Token, progress);
-                OnCompletedHandler?.Invoke();
                 Complete(RequestCompletionResult.Success);
             }
             catch (TaskCanceledException)
             {
-                await DestinationFile.DeleteAsync(StorageDeleteOption.PermanentDelete);
+                await destinationFile.DeleteAsync(StorageDeleteOption.PermanentDelete);
                 Complete(RequestCompletionResult.Canceled);
             }
             catch (Exception)
             {
-                await DestinationFile.DeleteAsync(StorageDeleteOption.PermanentDelete);
+                await destinationFile.DeleteAsync(StorageDeleteOption.PermanentDelete);
                 Complete(RequestCompletionResult.Failed);
             }
             finally
@@ -153,11 +160,6 @@ namespace LaserwarTest.Core.Networking.Downloading.Requests
                 CancellationToken = null;
                 DownloadClient = null;
             }
-        }
-
-        private void ReportProgress(int progressPercentage)
-        {
-            ProgressChanged?.Invoke(this, new DownloadRequestProgressChangedEventArgs(ID, progressPercentage));
         }
 
         /// <summary>

@@ -9,9 +9,14 @@
     
     xmlns:layouts="using:LaserwarTest.UI.Layouts"
     xmlns:controls="using:LaserwarTest.UI.Controls"
+    xmlns:converters="using:LaserwarTest.Commons.UI.Xaml.Converters"
     
     xmlns:sounds="using:LaserwarTest.Presentation.Sounds"
     >
+
+    <Page.Resources>
+        <converters:EnumToVisibilityConverter x:Key="EnumToVisibilityConverter"/>
+    </Page.Resources>
 
     <Grid>
         <layouts:PageLayoutTemplate Background="White" Title="Звуки">
@@ -23,9 +28,9 @@
 
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto" MinWidth="300" MaxWidth="300"/>
-                        <ColumnDefinition Width="auto" MinWidth="200" MaxWidth="200"/>
-                        <ColumnDefinition Width="auto" MinWidth="200" MaxWidth="200"/>
+                        <ColumnDefinition Width="auto" MinWidth="350"/>
+                        <ColumnDefinition Width="auto" MinWidth="250"/>
+                        <ColumnDefinition Width="auto" MinWidth="250"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
@@ -63,33 +68,80 @@
                         <DataTemplate x:DataType="sounds:Sound">
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="auto" MinWidth="300"/>
-                                    <ColumnDefinition Width="auto" MinWidth="200"/>
-                                    <ColumnDefinition Width="auto" MinWidth="200"/>
+                                    <ColumnDefinition Width="auto" MinWidth="350"/>
+                                    <ColumnDefinition Width="auto" MinWidth="250"/>
+                                    <ColumnDefinition Width="auto" MinWidth="250"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
 
                                 <TextBlock
                                     Grid.Column="0"
                                     Style="{StaticResource LW_TextBlockDefaultStyle}"
-                                    Text="{x:Bind Name, Mode=OneTime}"
+                                    Text="{x:Bind Name}"
                                     />
 
                                 <TextBlock
                                     Grid.Column="1"
                                     Style="{StaticResource LW_TextBlockDefaultStyle}"
-                                    Text="{x:Bind Size.DisplayText, Mode=OneTime}"
+                                    Text="{x:Bind Size.DisplayText}"
                                     />
 
-                                <controls:DownloadIconButton
-                                    Grid.Column="2"
-                                    HorizontalAlignment="Left"
-                                    />
+                                <Grid Grid.Column="2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
 
-                                <controls:SoundPlayerIconButton
-                                    Grid.Column="3"
-                                    HorizontalAlignment="Left"
-                                    />
+                                    <controls:DownloadIconButton
+                                        Grid.Column="0"
+                                        HorizontalAlignment="Left"
+                                        State="{x:Bind SoundDownloader.State, Mode=OneWay}"
+                                        Command="{x:Bind SoundDownloader.Command}"
+                                        IsEnabled="{x:Bind SoundDownloader.IsEnabled, Mode=OneWay}"
+                                        />
+
+                                    <controls:ContentProgressBar
+                                        Grid.Column="1"
+                                        Margin="10,0,0,0"
+                                        Width="150"
+                                        Value="{x:Bind SoundDownloader.ProgressPercentage, Mode=OneWay}"
+                                        Content="{x:Bind SoundDownloader.StateMessage, Mode=OneWay}"
+                                        Visibility="{x:Bind SoundDownloader.State, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Downloading}"
+                                        />
+                                    
+                                    <TextBlock
+                                        Grid.Column="1"
+                                        Margin="10,0,0,0"
+                                        FontSize="12"
+                                        VerticalAlignment="Bottom"
+                                        Text="{x:Bind SoundDownloader.StateMessage, Mode=OneWay}"
+                                        Visibility="{x:Bind SoundDownloader.State, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Downloaded}"
+                                        />
+                                </Grid>
+
+                                <Grid Grid.Column="3">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <controls:SoundPlayerIconButton
+                                        Grid.Column="0"
+                                        HorizontalAlignment="Left"
+                                        State="{x:Bind SoundPlayer.State, Mode=OneWay}"
+                                        Command="{x:Bind SoundPlayer.Command}"
+                                        IsEnabled="{x:Bind SoundPlayer.IsEnabled, Mode=OneWay}"
+                                        />
+
+                                    <controls:ContentProgressBar
+                                        Grid.Column="1"
+                                        Margin="10,0,0,0"
+                                        Width="150"
+                                        Value="{x:Bind SoundPlayer.ProgressPercentage, Mode=OneWay}"
+                                        Content="{x:Bind SoundPlayer.StateMessage, Mode=OneWay}"
+                                        Visibility="{x:Bind SoundPlayer.State, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Playing}"
+                                        />
+                                </Grid>
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>

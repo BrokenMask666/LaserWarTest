@@ -103,6 +103,7 @@
     <Compile Include="Commons\Async\AsyncLock.cs" />
     <Compile Include="Commons\Observables\ObservableObject.cs" />
     <Compile Include="Commons\Observables\ObservablePresenter.cs" />
+    <Compile Include="Commons\UI\Xaml\Converters\EnumToVisibilityConverter.cs" />
     <Compile Include="Commons\UI\Xaml\Converters\TextToVisibilityConverter.cs" />
     <Compile Include="Core\Data\DB\ISQLiteDBEntity.cs" />
     <Compile Include="Core\Data\DB\SQLiteDB.cs" />
@@ -115,6 +116,7 @@
     <Compile Include="Core\Data\DB\Versioning\Xml\XmlDBInfo.cs" />
     <Compile Include="Core\Data\DB\Versioning\Xml\XmlDBInfoLocal.cs" />
     <Compile Include="Core\Data\DB\Versioning\Xml\XmlDBVersionInfo.cs" />
+    <Compile Include="Core\Media\AudioPlayer.cs" />
     <Compile Include="Core\Networking\Downloading\Downloader.cs" />
     <Compile Include="Core\Networking\Downloading\DownloaderExceptions.cs" />
     <Compile Include="Core\Networking\Downloading\Requests\DownloadRequest.cs" />
@@ -135,6 +137,7 @@
     <Compile Include="Data\DB\Tables\PlayerTable.cs" />
     <Compile Include="Data\DB\Tables\SoundTable.cs" />
     <Compile Include="Data\DB\Tables\TeamTable.cs" />
+    <Compile Include="Data\Server\Requests\DownloadRequestIDGenerator.cs" />
     <Compile Include="Data\Server\Requests\Json\JsonServerResponse.cs" />
     <Compile Include="Data\Server\Requests\Xml\XmlGameData.cs" />
     <Compile Include="Helpers\VisualTreeExplorer.cs" />
@@ -158,8 +161,8 @@
     <Compile Include="Presentation\Games\Game.cs" />
     <Compile Include="Presentation\Games\VMGames.cs" />
     <Compile Include="Presentation\Sounds\Sound.cs" />
-    <Compile Include="Presentation\Sounds\SoundDownloadingInfo.cs" />
-    <Compile Include="Presentation\Sounds\SoundPlayingInfo.cs" />
+    <Compile Include="Presentation\Sounds\SoundDownloader.cs" />
+    <Compile Include="Presentation\Sounds\SoundPlayer.cs" />
     <Compile Include="Presentation\Sounds\VMSounds.cs" />
     <Compile Include="Presentation\VMDownload.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

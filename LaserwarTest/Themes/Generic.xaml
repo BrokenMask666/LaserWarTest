@@ -280,6 +280,7 @@
                         VerticalAlignment="{TemplateBinding VerticalAlignment}" 
                         HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
                         MinWidth="{TemplateBinding MinWidth}"
+                        Width="{TemplateBinding Width}"
                         >
                         <ContentPresenter 
                             Content="{TemplateBinding Content}" 
