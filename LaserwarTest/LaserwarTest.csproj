@@ -101,8 +101,11 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Commons\Async\AsyncLock.cs" />
+    <Compile Include="Commons\Observables\GroupSorter.cs" />
     <Compile Include="Commons\Observables\ObservableObject.cs" />
     <Compile Include="Commons\Observables\ObservablePresenter.cs" />
+    <Compile Include="Commons\Observables\Sorter.cs" />
+    <Compile Include="Commons\UI\Xaml\Converters\AdditionalSymbolConverter.cs" />
     <Compile Include="Commons\UI\Xaml\Converters\EnumToVisibilityConverter.cs" />
     <Compile Include="Commons\UI\Xaml\Converters\TextToVisibilityConverter.cs" />
     <Compile Include="Core\Data\DB\ISQLiteDBEntity.cs" />
@@ -159,6 +162,7 @@
     <Compile Include="Presentation\BaseViewModel.cs" />
     <Compile Include="Presentation\Common\FileSizePresenter.cs" />
     <Compile Include="Presentation\Games\Game.cs" />
+    <Compile Include="Presentation\Games\VMGameDetails.cs" />
     <Compile Include="Presentation\Games\VMGames.cs" />
     <Compile Include="Presentation\Sounds\Sound.cs" />
     <Compile Include="Presentation\Sounds\SoundDownloader.cs" />

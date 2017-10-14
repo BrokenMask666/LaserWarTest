@@ -8,10 +8,26 @@
     mc:Ignorable="d"
     
     xmlns:layouts="using:LaserwarTest.UI.Layouts"
+    xmlns:games="using:LaserwarTest.Presentation.Games"
+    
+    xmlns:ext="using:LaserwarTest.UI.Controls.Extensions"
+    xmlns:converters="using:LaserwarTest.Commons.UI.Xaml.Converters"
     >
 
+    <Page.Resources>
+        <converters:AdditionalSymbolConverter x:Key="AdditionalSymbolConverter"/>
+
+        <CollectionViewSource 
+            x:Key="CVS"
+            IsSourceGrouped="True"
+            Source="{x:Bind VMGameDetails.Teams, Mode=OneWay}"
+            ItemsPath="SortedItems"
+            />
+        
+    </Page.Resources>
+
     <Grid>
-        <layouts:PageLayoutTemplate Background="White" Title="Детали игры">
+        <layouts:PageLayoutTemplate x:Name="PageLayout" Background="White" Title="Детали игры">
             <layouts:PageLayoutTemplate.TitleRightContent>
                 <StackPanel
                     Orientation="Horizontal"
@@ -30,7 +46,142 @@
 
                 </StackPanel>
             </layouts:PageLayoutTemplate.TitleRightContent>
-            
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="45"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Grid Margin="0,0,50,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" MinWidth="150" MaxWidth="350"/>
+                        <ColumnDefinition Width="*" MinWidth="50" MaxWidth="250"/>
+                        <ColumnDefinition Width="*" MinWidth="50" MaxWidth="250"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock
+                        Grid.Column="0"
+                        Style="{StaticResource LW_TextBlockControlHeaderStyle}"
+                        Text="Игрок"
+                        Tapped="TextBlock_Tapped"
+                        />
+
+                    <TextBlock
+                        Grid.Column="1"
+                        Style="{StaticResource LW_TextBlockControlHeaderStyle}"
+                        Text="Рейтинг"
+                        Tapped="TextBlock_Tapped_1"
+                        />
+
+                    <TextBlock
+                        Grid.Column="2"
+                        Style="{StaticResource LW_TextBlockControlHeaderStyle}"
+                        Text="Точность"
+                        Tapped="TextBlock_Tapped_2"
+                        />
+
+                    <TextBlock
+                        Grid.Column="3"
+                        Style="{StaticResource LW_TextBlockControlHeaderStyle}"
+                        Text="Выстрелы"
+                        Tapped="TextBlock_Tapped_3"
+                        />
+                </Grid>
+
+                <ListView
+                    Grid.Row="1"
+                    SelectionMode="None"
+                    IsItemClickEnabled="True"
+                    ItemClick="OnListViewItemClick_LostFocus"
+                    ItemsSource="{Binding Source={StaticResource CVS}, Mode=OneWay}"
+                    >
+                    <ListView.Resources>
+                        <Style x:Key="TextBoxParamEditorStyle" TargetType="TextBox" BasedOn="{StaticResource LW_TextBoxDefaultStyle}">
+                            <Setter Property="ext:TextBoxExtensions.SelectTextOnFocus" Value="True"/>
+                            <Setter Property="BorderBrush" Value="Transparent"/>
+                            <Setter Property="HorizontalAlignment" Value="Left"/>
+                            <Setter Property="MinWidth" Value="150"/>
+                            <Setter Property="Header" Value="  "/>
+                        </Style>
+                    </ListView.Resources>
+                    <ListView.GroupStyle>
+                        <GroupStyle HidesIfEmpty="True">
+                            <GroupStyle.HeaderTemplate>
+                                <DataTemplate x:DataType="games:PlayersTeam">
+                                    <Grid>
+                                        <TextBlock 
+                                            Text="{x:Bind Group.Name}"
+                                            />
+                                    </Grid>
+                                </DataTemplate>
+                            </GroupStyle.HeaderTemplate>
+                        </GroupStyle>
+                    </ListView.GroupStyle>
+                    <ListView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <ItemsStackPanel GroupPadding="0,0,0,50"/>
+                        </ItemsPanelTemplate>
+                    </ListView.ItemsPanel>
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem" BasedOn="{StaticResource LW_ListViewItemContainerDefaultStyle}">
+                            <Setter Property="BorderThickness" Value="0"/>
+                            <Setter Property="Padding" Value="0"/>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="games:Player">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" MinWidth="150" MaxWidth="350"/>
+                                    <ColumnDefinition Width="*" MinWidth="50" MaxWidth="250"/>
+                                    <ColumnDefinition Width="*" MinWidth="50" MaxWidth="250"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Rectangle
+                                    Grid.ColumnSpan="4"
+                                    VerticalAlignment="Bottom"
+                                    HorizontalAlignment="Stretch"
+                                    Height="1"
+                                    Stroke="{ThemeResource LW_ControlDisabledBackgroundBrush}"
+                                    StrokeThickness="0.5"
+                                    />
+
+                                <TextBox
+                                    Grid.Column="0"
+                                    Style="{StaticResource TextBoxParamEditorStyle}"
+                                    VerticalAlignment="Top"
+                                    MinWidth="250"
+                                    Text="{x:Bind Name}"
+                                    />
+
+                                <TextBox
+                                    Grid.Column="1"
+                                    Style="{StaticResource TextBoxParamEditorStyle}"
+                                    Text="{x:Bind Rating}"
+                                    />
+
+                                <TextBox
+                                    Grid.Column="2"
+                                    Style="{StaticResource TextBoxParamEditorStyle}"
+                                    ext:TextBoxExtensions.OnSelectionChangedIgnoreSymbol="%"
+                                    Text="{x:Bind Str, Mode=TwoWay, Converter={StaticResource AdditionalSymbolConverter}, ConverterParameter=%}"
+                                    />
+
+                                <TextBox
+                                    Grid.Column="3"
+                                    Style="{StaticResource TextBoxParamEditorStyle}"
+                                    Text="{x:Bind Shots}"
+                                    />
+
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+
         </layouts:PageLayoutTemplate>
     </Grid>
 </Page>

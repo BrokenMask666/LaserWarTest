@@ -43,5 +43,73 @@ namespace LaserwarTest.UI.Controls.Extensions
         {
             element.SetValue(SelectTextOnFocusProperty, value);
         }
+
+
+
+
+
+
+
+
+
+
+        public static readonly DependencyProperty OnSelectionChangedIgnoreSymbolProperty =
+            DependencyProperty.RegisterAttached(
+                "OnSelectionChangedIgnoreSymbol",
+                typeof(string),
+                typeof(TextBoxExtensions),
+                new PropertyMetadata("", OnOnSelectionChangedIgnoreSymbolChanged));
+
+        private static void OnOnSelectionChangedIgnoreSymbolChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var obj = d as TextBox;
+            if (obj == null) return;
+
+            string value = (string)e.NewValue;
+            if (!string.IsNullOrWhiteSpace(value))
+            {
+                obj.SelectionChanged += OnSelectionChanged;
+            }
+            else
+            {
+                obj.SelectionChanged -= OnSelectionChanged;
+            }
+        }
+
+        private static void OnSelectionChanged(object sender, RoutedEventArgs e)
+        {
+            var obj = sender as TextBox;
+            string symbol = GetOnSelectionChangedIgnoreSymbol(obj);
+
+            int indx = obj.Text.LastIndexOf(symbol);
+            if (indx == -1) return;
+
+            obj.SelectionChanged -= OnSelectionChanged;
+
+            int start = obj.SelectionStart;
+            int length = obj.SelectionLength;
+
+            if (start > indx)
+            {
+                obj.SelectionStart = indx;
+                obj.SelectionLength = 0;
+            }
+            else if (start + length > indx)
+            {
+                obj.SelectionLength = indx - start;
+            }
+
+            obj.SelectionChanged += OnSelectionChanged;
+        }
+
+        public static string GetOnSelectionChangedIgnoreSymbol(TextBox element)
+        {
+            return (string)element.GetValue(OnSelectionChangedIgnoreSymbolProperty);
+        }
+
+        public static void SetOnSelectionChangedIgnoreSymbol(TextBox element, string value)
+        {
+            element.SetValue(OnSelectionChangedIgnoreSymbolProperty, value);
+        }
     }
 }

@@ -22,15 +22,15 @@
         <layouts:PageLayoutTemplate Background="White" Title="Звуки">
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="65"/>
+                    <RowDefinition Height="45"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <Grid>
+                <Grid Margin="0,0,50,0">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto" MinWidth="350"/>
-                        <ColumnDefinition Width="auto" MinWidth="250"/>
-                        <ColumnDefinition Width="auto" MinWidth="250"/>
+                        <ColumnDefinition Width="*" MinWidth="150" MaxWidth="350"/>
+                        <ColumnDefinition Width="*" MinWidth="50" MaxWidth="250"/>
+                        <ColumnDefinition Width="*" MinWidth="50" MaxWidth="250"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
@@ -68,9 +68,9 @@
                         <DataTemplate x:DataType="sounds:Sound">
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="auto" MinWidth="350"/>
-                                    <ColumnDefinition Width="auto" MinWidth="250"/>
-                                    <ColumnDefinition Width="auto" MinWidth="250"/>
+                                    <ColumnDefinition Width="*" MinWidth="150" MaxWidth="350"/>
+                                    <ColumnDefinition Width="*" MinWidth="50" MaxWidth="250"/>
+                                    <ColumnDefinition Width="*" MinWidth="50" MaxWidth="250"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
 

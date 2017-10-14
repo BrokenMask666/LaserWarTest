@@ -1,11 +1,6 @@
 ﻿using LaserwarTest.Commons.Observables;
 using LaserwarTest.Data.DB.Entities;
-using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LaserwarTest.Presentation.Games
 {
@@ -22,6 +17,11 @@ namespace LaserwarTest.Presentation.Games
         /// Получает доступ к информации о звуке
         /// </summary>
         GameEntity Data { get; }
+
+        /// <summary>
+        /// Получает идентификатор 
+        /// </summary>
+        public int ID => Data.ID;
 
         /// <summary>
         /// Получает название игры

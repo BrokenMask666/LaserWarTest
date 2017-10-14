@@ -1,6 +1,8 @@
-﻿using LaserwarTest.Presentation.Games;
+﻿using LaserwarTest.Helpers;
+using LaserwarTest.Presentation.Games;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -33,6 +35,17 @@ namespace LaserwarTest.Pages
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             VMGames.Load();
+        }
+
+        private void ListViewItem_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
+        {
+            if (e.OriginalSource is FrameworkElement tappedElement)
+            {
+                if (tappedElement.DataContext is Game game)
+                {
+                    Frame.Navigate(typeof(GameDetailsPage), game);
+                }
+            }
         }
     }
 }

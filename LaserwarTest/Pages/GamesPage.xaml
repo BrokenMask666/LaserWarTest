@@ -17,14 +17,14 @@
         <layouts:PageLayoutTemplate Background="White" Title="Игры">
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="65"/>
+                    <RowDefinition Height="45"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <Grid>
+                <Grid Margin="0,0,50,0">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto" MinWidth="400"/>
-                        <ColumnDefinition Width="auto" MinWidth="300"/>
+                        <ColumnDefinition Width="*" MinWidth="150" MaxWidth="400"/>
+                        <ColumnDefinition Width="*" MinWidth="50" MaxWidth="300"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
@@ -54,10 +54,10 @@
                     >
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="games:Game">
-                            <Grid>
+                            <Grid IsDoubleTapEnabled="True" DoubleTapped="ListViewItem_DoubleTapped">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="auto" MinWidth="400"/>
-                                    <ColumnDefinition Width="auto" MinWidth="300"/>
+                                    <ColumnDefinition Width="*" MinWidth="150" MaxWidth="400"/>
+                                    <ColumnDefinition Width="*" MinWidth="50" MaxWidth="300"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
 

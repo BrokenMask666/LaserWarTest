@@ -975,13 +975,78 @@
                 </Setter>
             </Style>
 
+            <Style x:Key="LW_ListViewItemPresenterStyle" TargetType="ListViewItemPresenter">
+                <Setter Property="CheckBrush" Value="{ThemeResource SystemControlForegroundBaseMediumHighBrush}" />
+                <Setter Property="CheckMode" Value="Inline" />
+                <Setter Property="CheckBoxBrush" Value="{ThemeResource SystemControlForegroundBaseMediumHighBrush}" />
+                <Setter Property="DragForeground" Value="{ThemeResource ListViewItemDragForegroundThemeBrush}" />
+                <Setter Property="DragOpacity" Value="{ThemeResource ListViewItemDragThemeOpacity}" />
+                <Setter Property="DragBackground" Value="{ThemeResource ListViewItemDragBackgroundThemeBrush}" />
+                <Setter Property="DisabledOpacity" Value="{ThemeResource ListViewItemDisabledThemeOpacity}" />
+                <Setter Property="FocusBorderBrush" Value="{ThemeResource SystemControlForegroundAltHighBrush}" />
+                <Setter Property="FocusSecondaryBorderBrush" Value="{ThemeResource SystemControlForegroundBaseHighBrush}" />
+                <Setter Property="PointerOverForeground" Value="{ThemeResource SystemControlHighlightAltBaseHighBrush}" />
+                <Setter Property="PressedBackground" Value="{ThemeResource SystemControlHighlightListMediumBrush}" />
+                <Setter Property="PlaceholderBackground" Value="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}" />
+                <Setter Property="PointerOverBackground" Value="{ThemeResource SystemControlHighlightListLowBrush}" />
+                <Setter Property="ReorderHintOffset" Value="{ThemeResource ListViewItemReorderHintThemeOffset}" />
+                <Setter Property="SelectedPressedBackground" Value="{ThemeResource SystemControlHighlightListAccentHighBrush}" />
+                <Setter Property="SelectionCheckMarkVisualEnabled" Value="True" />
+                <Setter Property="SelectedForeground" Value="{ThemeResource SystemControlHighlightAltBaseHighBrush}" />
+                <Setter Property="SelectedPointerOverBackground" Value="{ThemeResource SystemControlHighlightListAccentMediumBrush}" />
+                <Setter Property="SelectedBackground" Value="{ThemeResource SystemControlHighlightListAccentLowBrush}" />
+            </Style>
+            <Style x:Key="LW_ListViewItemPresenterDefaultStyle" TargetType="ListViewItemPresenter" BasedOn="{StaticResource LW_ListViewItemPresenterStyle}">
+                <Setter Property="PressedBackground" Value="Transparent" />
+                <Setter Property="PointerOverBackground" Value="Transparent" />
+            </Style>
+
             <Style x:Key="LW_ListViewItemContainerDefaultStyle" TargetType="ListViewItem">
                 <Setter Property="HorizontalAlignment" Value="Stretch"/>
                 <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                <Setter Property="Padding" Value="0"/>
+                <Setter Property="VerticalContentAlignment" Value="Bottom"/>
+                <Setter Property="Margin" Value="0,10,50,0"/>
+                <Setter Property="Padding" Value="0,0,0,5"/>
                 <Setter Property="BorderThickness" Value="0,0,0,1"/>
                 <Setter Property="BorderBrush" Value="{ThemeResource LW_ControlDisabledBackgroundColor}"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ListViewItem">
+                            <ListViewItemPresenter 
+                                Style="{StaticResource LW_ListViewItemPresenterDefaultStyle}"
+                                ContentMargin="{TemplateBinding Padding}"
+                                ContentTransitions="{TemplateBinding ContentTransitions}"
+                                HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                />
+
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
             </Style>
+            
+            <Style x:Key="LW_ListViewHeaderItemContainerDefaultStyle" TargetType="ListViewHeaderItem">
+                <Setter Property="FontWeight" Value="Medium"/>
+                <Setter Property="FontSize" Value="26"/>
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="Margin" Value="0,0,0,12"/>
+                <Setter Property="Padding" Value="0,8,0,0"/>
+                <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                <Setter Property="VerticalContentAlignment" Value="Top"/>
+                <Setter Property="MinHeight" Value="{ThemeResource ListViewHeaderItemMinHeight}"/>
+                <Setter Property="UseSystemFocusVisuals" Value="True"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ListViewHeaderItem">
+                            <StackPanel BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
+                                <ContentPresenter x:Name="ContentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" ContentTransitions="{TemplateBinding ContentTransitions}" Content="{TemplateBinding Content}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                <!--<Rectangle HorizontalAlignment="Stretch" Height="1" Margin="12,8,12,0" Stroke="{ThemeResource SystemControlForegroundBaseLowBrush}" StrokeThickness="0.5" VerticalAlignment="Bottom"/>-->
+                            </StackPanel>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
 
 
             <!--Глобальный стиль для ContentPresenter-->
@@ -990,13 +1055,13 @@
             </Style>
 
             <!--Глобальный стиль для ListViewItem-->
-            <Style TargetType="ListViewItem" BasedOn="{StaticResource LW_ListViewItemContainerDefaultStyle}">
-                <Setter Property="HorizontalAlignment" Value="Stretch"/>
-                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                <Setter Property="Padding" Value="0"/>
-                <Setter Property="BorderThickness" Value="0,0,0,1"/>
-                <Setter Property="BorderBrush" Value="{ThemeResource LW_ControlDisabledBackgroundColor}"/>
-            </Style>
+            <Style TargetType="ListViewItem" BasedOn="{StaticResource LW_ListViewItemContainerDefaultStyle}"/>
+            <!--Глобальный стиль для ListViewHeaderItem-->
+            <Style TargetType="ListViewHeaderItem" BasedOn="{StaticResource LW_ListViewHeaderItemContainerDefaultStyle}"/>
+
+
+
+
 
         </ResourceDictionary>
     </Application.Resources>
