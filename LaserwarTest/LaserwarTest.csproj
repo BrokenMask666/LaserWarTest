@@ -176,6 +176,7 @@
     <Compile Include="UI\Controls\DownloadIconButton.cs" />
     <Compile Include="UI\Controls\Extensions\ContentControlExtensions.cs" />
     <Compile Include="UI\Controls\Extensions\TextBoxExtensions.cs" />
+    <Compile Include="UI\Controls\Extensions\TextBoxNumericValidator.cs" />
     <Compile Include="UI\Controls\IconButton.cs" />
     <Compile Include="UI\Controls\SoundPlayerIconButton.cs" />
     <Compile Include="UI\Layouts\BackButton.cs" />
