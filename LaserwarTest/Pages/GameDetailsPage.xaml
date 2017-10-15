@@ -154,14 +154,19 @@
                                     Style="{StaticResource TextBoxParamEditorStyle}"
                                     VerticalAlignment="Top"
                                     MinWidth="250"
-                                    Text="{x:Bind Name}"
+                                    Text="{Binding Name, Mode=TwoWay}"
+                                    LostFocus="OnLostFocus_SavePlayerData"
+                                    KeyUp="OnEnterUp_SavePlayerData"
                                     />
 
                                 <TextBox
                                     Grid.Column="1"
                                     Style="{StaticResource TextBoxParamEditorStyle}"
                                     ext:TextBoxNumericValidator.InputType="Integer"
-                                    Text="{x:Bind Rating}"
+                                    MaxLength="10"
+                                    Text="{Binding Rating, Mode=TwoWay}"
+                                    LostFocus="OnLostFocus_SavePlayerData"
+                                    KeyUp="OnEnterUp_SavePlayerData"
                                     />
 
                                 <TextBox
@@ -170,15 +175,23 @@
                                     ext:TextBoxExtensions.OnSelectionChangedIgnoreSymbol="%"
                                     ext:TextBoxNumericValidator.IgnoredSymbol="%"
                                     ext:TextBoxNumericValidator.InputType="Integer"
-                                    Text="{x:Bind AccuracyPercentage, Mode=TwoWay, Converter={StaticResource AdditionalSymbolConverter}, ConverterParameter=%}"
+                                    ext:TextBoxNumericValidator.MinValue="0"
+                                    ext:TextBoxNumericValidator.MaxValue="100"
+                                    MaxLength="4"
+                                    Text="{Binding AccuracyPercentage, Mode=TwoWay, Converter={StaticResource AdditionalSymbolConverter}, ConverterParameter=%}"
+                                    LostFocus="OnLostFocus_SavePlayerData"
+                                    KeyUp="OnEnterUp_SavePlayerData"
                                     />
+                                
                                 <TextBox
                                     Grid.Column="3"
                                     Style="{StaticResource TextBoxParamEditorStyle}"
                                     ext:TextBoxNumericValidator.InputType="Integer"
-                                    Text="{x:Bind Shots}"
+                                    MaxLength="100"
+                                    Text="{Binding Shots, Mode=TwoWay}"
+                                    LostFocus="OnLostFocus_SavePlayerData"
+                                    KeyUp="OnEnterUp_SavePlayerData"
                                     />
-
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>

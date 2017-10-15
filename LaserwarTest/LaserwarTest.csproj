@@ -161,7 +161,11 @@
     </Compile>
     <Compile Include="Presentation\BaseViewModel.cs" />
     <Compile Include="Presentation\Common\FileSizePresenter.cs" />
+    <Compile Include="Presentation\Games\Comparers\PlayerComparers.cs" />
     <Compile Include="Presentation\Games\Game.cs" />
+    <Compile Include="Presentation\Games\Player.cs" />
+    <Compile Include="Presentation\Games\PlayersTeam.cs" />
+    <Compile Include="Presentation\Games\Team.cs" />
     <Compile Include="Presentation\Games\VMGameDetails.cs" />
     <Compile Include="Presentation\Games\VMGames.cs" />
     <Compile Include="Presentation\Sounds\Sound.cs" />

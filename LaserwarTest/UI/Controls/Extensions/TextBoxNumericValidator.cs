@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Globalization;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -12,6 +6,55 @@ namespace LaserwarTest.UI.Controls.Extensions
 {
     public class TextBoxNumericValidator
     {
+        /// <summary>
+        /// Класс для хранения служебных свойств
+        /// </summary>
+        public class Services
+        {
+            #region LastSelectionChangedParams
+
+            public static readonly DependencyProperty LastSelectionChangedParamsProperty =
+                DependencyProperty.RegisterAttached(
+                    "LastSelectionChangedParams",
+                    typeof(SelectionChangedParams),
+                    typeof(TextBoxNumericValidator),
+                    new PropertyMetadata(new SelectionChangedParams(0,0)));
+
+            public static SelectionChangedParams GetLastSelectionChangedParams(TextBox element)
+            {
+                return (SelectionChangedParams)element.GetValue(LastSelectionChangedParamsProperty);
+            }
+
+            public static void SetLastSelectionChangedParams(TextBox element, SelectionChangedParams value)
+            {
+                element.SetValue(LastSelectionChangedParamsProperty, value);
+            }
+
+
+            #endregion LastSelectionChangedParams
+
+            #region IgnoreSelectionChanged
+
+            public static readonly DependencyProperty IgnoreSelectionChangedProperty =
+                DependencyProperty.RegisterAttached(
+                    "IgnoreSelectionChanged",
+                    typeof(bool),
+                    typeof(TextBoxNumericValidator),
+                    new PropertyMetadata(false));
+
+            public static bool GetIgnoreSelectionChanged(TextBox element)
+            {
+                return (bool)element.GetValue(IgnoreSelectionChangedProperty);
+            }
+
+            public static void SetIgnoreSelectionChanged(TextBox element, bool value)
+            {
+                element.SetValue(IgnoreSelectionChangedProperty, value);
+            }
+
+            #endregion IgnoreSelectionChanged
+        }
+
         #region CorrectText
 
         public static readonly DependencyProperty CorrectTextProperty =
@@ -33,46 +76,47 @@ namespace LaserwarTest.UI.Controls.Extensions
 
         #endregion CorrectText
 
-        #region LastSelectionChangedParams
+        #region MinValue
 
-        public static readonly DependencyProperty LastSelectionChangedParamsProperty =
+        public static readonly DependencyProperty MinValueProperty =
             DependencyProperty.RegisterAttached(
-                "LastSelectionChangedParams",
-                typeof(SelectionChangedParams),
+                "MinValue",
+                typeof(string),
                 typeof(TextBoxNumericValidator),
-                new PropertyMetadata(new SelectionChangedParams(0,0)));
+                new PropertyMetadata(null));
 
-        public static SelectionChangedParams GetLastSelectionChangedParams(TextBox element)
+        public static string GetMinValue(TextBox element)
         {
-            return (SelectionChangedParams)element.GetValue(LastSelectionChangedParamsProperty);
+            return (string)element.GetValue(MinValueProperty);
         }
 
-        public static void SetLastSelectionChangedParams(TextBox element, SelectionChangedParams value)
+        public static void SetMinValue(TextBox element, string value)
         {
-            element.SetValue(LastSelectionChangedParamsProperty, value);
+            element.SetValue(MinValueProperty, value);
         }
 
+        #endregion MinValue
 
+        #region MaxValue
 
-
-        public static readonly DependencyProperty IgnoreSelectionChangedProperty =
+        public static readonly DependencyProperty MaxValueProperty =
             DependencyProperty.RegisterAttached(
-                "IgnoreSelectionChanged",
-                typeof(bool),
+                "MaxValue",
+                typeof(string),
                 typeof(TextBoxNumericValidator),
-                new PropertyMetadata(false));
+                new PropertyMetadata(null));
 
-        public static bool GetIgnoreSelectionChanged(TextBox element)
+        public static string GetMaxValue(TextBox element)
         {
-            return (bool)element.GetValue(IgnoreSelectionChangedProperty);
+            return (string)element.GetValue(MaxValueProperty);
         }
 
-        public static void SetIgnoreSelectionChanged(TextBox element, bool value)
+        public static void SetMaxValue(TextBox element, string value)
         {
-            element.SetValue(IgnoreSelectionChangedProperty, value);
+            element.SetValue(MaxValueProperty, value);
         }
 
-        #endregion CorrectText
+        #endregion MaxValue
 
         #region IgnoredSymbol
 
@@ -95,7 +139,7 @@ namespace LaserwarTest.UI.Controls.Extensions
 
         #endregion IgnoredSymbol
 
-        #region InputType (and validation)
+        #region InputType
 
         public static readonly DependencyProperty InputTypeProperty =
             DependencyProperty.RegisterAttached(
@@ -130,20 +174,40 @@ namespace LaserwarTest.UI.Controls.Extensions
             }
         }
 
+        public static NumericInputType GetInputType(TextBox element)
+        {
+            return (NumericInputType)element.GetValue(InputTypeProperty);
+        }
+
+        public static void SetInputType(TextBox element, NumericInputType value)
+        {
+            element.SetValue(InputTypeProperty, value);
+        }
+
+        #endregion InputType
+
+        #region Validation
+
         private static void OnTextChanging(TextBox sender, TextBoxTextChangingEventArgs args)
         {
-            Debug.WriteLine("OnTextChanging");
-            SetIgnoreSelectionChanged(sender, true);
+            Services.SetIgnoreSelectionChanged(sender, true);
         }
 
         private static void OnTextChanged(object sender, TextChangedEventArgs e)
         {
-            Debug.WriteLine("OnTextChanged");
             var obj = sender as TextBox;
 
             string text = obj.Text;
             string parsingText = text;
             string correctText = GetCorrectText(obj);
+
+            int? minInt = null;
+            int? maxInt = null;
+            double? minDbl = null;
+            double? maxDbl = null;
+
+            NumericInputType inputType = GetInputType(obj);
+            CultureInfo currentCulture = CultureInfo.CurrentUICulture;
 
             string ignoredSymbol = GetIgnoredSymbol(obj);
             bool hasIgnoredSymbol = false;
@@ -162,17 +226,20 @@ namespace LaserwarTest.UI.Controls.Extensions
                 }
             }
 
-            NumericInputType inputType = GetInputType(obj);
             if (string.IsNullOrWhiteSpace(text))
             {
                 switch (inputType)
                 {
                     case NumericInputType.Integer:
-                        parsingText = default(int).ToString();
+                        minInt = ParseInt(GetMinValue(obj), NumberStyles.None, currentCulture);
+
+                        parsingText = (minInt ?? default(int)).ToString();
                         break;
 
                     case NumericInputType.Double:
-                        parsingText = default(double).ToString();
+                        minDbl = double.Parse(GetMinValue(obj), NumberStyles.AllowDecimalPoint, currentCulture);
+
+                        parsingText = (minDbl ?? default(double)).ToString();
                         break;
 
                     default:
@@ -190,28 +257,59 @@ namespace LaserwarTest.UI.Controls.Extensions
 
             if (text == correctText) return;
 
-            CultureInfo currentCulture = CultureInfo.CurrentUICulture;
-
             bool isCorrect = true;
+            bool valueChanged = false;
             switch (inputType)
             {
-                case NumericInputType.Double:
-
-                    if (parsingText.IndexOfAny(new[] { ',', '.' }) != -1)
-                    {
-                        var numberDecimalSeparator = currentCulture.NumberFormat.NumberDecimalSeparator;
-
-                        if (numberDecimalSeparator == ",")
-                            parsingText = parsingText.Replace(".", ",");
-                        else if (numberDecimalSeparator == ".")
-                            parsingText = parsingText.Replace(",", ".");
-                    }
-
-                    isCorrect = double.TryParse(parsingText, NumberStyles.AllowDecimalPoint, currentCulture, out double dblResult);
-                    break;
-
                 case NumericInputType.Integer:
                     isCorrect = int.TryParse(parsingText, NumberStyles.None, currentCulture, out int intResult);
+
+                    minInt = ParseInt(GetMinValue(obj), NumberStyles.None, currentCulture);
+                    maxInt = ParseInt(GetMaxValue(obj), NumberStyles.None, currentCulture);
+
+                    if (minInt != null && intResult < minInt)
+                    {
+                        intResult = minInt.Value;
+                        valueChanged = true;
+                    }
+
+                    if (maxInt != null && intResult > maxInt)
+                    {
+                        intResult = maxInt.Value;
+                        valueChanged = true;
+                    }
+
+                    if (valueChanged)
+                    {
+                        parsingText = intResult.ToString();
+                    }
+
+                    break;
+
+                case NumericInputType.Double:
+                    parsingText = ValidateDecimalPoint(parsingText, currentCulture);
+                    isCorrect = double.TryParse(parsingText, NumberStyles.AllowDecimalPoint, currentCulture, out double dblResult);
+
+                    minDbl = double.Parse(GetMinValue(obj), NumberStyles.AllowDecimalPoint, currentCulture);
+                    maxDbl = double.Parse(GetMaxValue(obj), NumberStyles.AllowDecimalPoint, currentCulture);
+
+                    if (minDbl != null && dblResult < minDbl)
+                    {
+                        dblResult = minDbl.Value;
+                        valueChanged = true;
+                    }
+
+                    if (maxDbl != null && dblResult > maxDbl)
+                    {
+                        dblResult = maxDbl.Value;
+                        valueChanged = true;
+                    }
+
+                    if (valueChanged)
+                    {
+                        parsingText = dblResult.ToString();
+                    }
+
                     break;
 
                 default:
@@ -222,10 +320,22 @@ namespace LaserwarTest.UI.Controls.Extensions
             {
                 text = $"{parsingText}{((hasIgnoredSymbol) ? ignoredSymbol : "")}";
                 SetCorrectText(obj, text);
+
+                if (valueChanged)
+                {
+                    obj.SelectionChanged -= OnSelectionChanged;
+                    obj.TextChanged -= OnTextChanged;
+
+                    obj.Text = text;
+                    obj.SelectionStart = parsingText.Length;
+
+                    obj.SelectionChanged += OnSelectionChanged;
+                    obj.TextChanged += OnTextChanged;
+                }
             }
             else
             {
-                SelectionChangedParams selectionParams = GetLastSelectionChangedParams(obj);
+                SelectionChangedParams selectionParams = Services.GetLastSelectionChangedParams(obj);
                 bool oldTextEmpty = string.IsNullOrWhiteSpace(correctText);
 
                 obj.SelectionChanged -= OnSelectionChanged;
@@ -239,18 +349,53 @@ namespace LaserwarTest.UI.Controls.Extensions
                 obj.SelectionChanged += OnSelectionChanged;
             }
 
-            SetLastSelectionChangedParams(obj, new SelectionChangedParams(obj.SelectionStart, obj.SelectionLength));
-            SetIgnoreSelectionChanged(obj, false);
+            Services.SetLastSelectionChangedParams(obj, new SelectionChangedParams(obj.SelectionStart, obj.SelectionLength));
+            Services.SetIgnoreSelectionChanged(obj, false);
+        }
+
+        public static string ValidateDecimalPoint(string text, CultureInfo culture)
+        {
+            string ret = "";
+            if (text.IndexOfAny(new[] { ',', '.' }) != -1)
+            {
+                var numberDecimalSeparator = culture.NumberFormat.NumberDecimalSeparator;
+
+                if (numberDecimalSeparator == ",")
+                    ret = text.Replace(".", ",");
+                else if (numberDecimalSeparator == ".")
+                    ret = text.Replace(",", ".");
+            }
+
+            return ret;
+        }
+
+        private static int? ParseInt(string text, NumberStyles styles, CultureInfo culture)
+        {
+            int? ret = null;
+            if (!string.IsNullOrWhiteSpace(text))
+                ret = int.Parse(text, styles, culture);
+
+            return ret;
+        }
+
+        private static double? ParseDouble(string text, NumberStyles styles, CultureInfo culture)
+        {
+            double? ret = null;
+
+            text = ValidateDecimalPoint(text, culture);
+            if (!string.IsNullOrWhiteSpace(text))
+                ret = double.Parse(text, styles, culture);
+
+            return ret;
         }
 
         private static void OnSelectionChanged(object sender, RoutedEventArgs e)
         {
-            Debug.WriteLine("OnSelectionChanged");
             var obj = sender as TextBox;
 
-            if (GetIgnoreSelectionChanged(obj)) return;
+            if (Services.GetIgnoreSelectionChanged(obj)) return;
 
-            SetLastSelectionChangedParams(obj, new SelectionChangedParams(obj.SelectionStart, obj.SelectionLength));
+            Services.SetLastSelectionChangedParams(obj, new SelectionChangedParams(obj.SelectionStart, obj.SelectionLength));
         }
 
         private static void OnGotFocus(object sender, RoutedEventArgs e)
@@ -265,28 +410,18 @@ namespace LaserwarTest.UI.Controls.Extensions
         {
             var obj = sender as TextBox;
 
-            if (GetInputType(obj) == NumericInputType.Double)
+            CultureInfo currentCulture = CultureInfo.CurrentUICulture;
+            NumericInputType inputType = GetInputType(obj);
+            if (inputType == NumericInputType.Double)
             {
-                CultureInfo currentCulture = CultureInfo.CurrentUICulture;
-                SetCorrectText(obj, double
-                    .Parse(GetCorrectText(obj), NumberStyles.AllowDecimalPoint, currentCulture)
-                    .ToString("G", currentCulture));
+                double? val = ParseDouble(GetCorrectText(obj), NumberStyles.AllowDecimalPoint, currentCulture);
+                if (val != null) SetCorrectText(obj, val.Value.ToString("G", currentCulture));
             }
 
             obj.Text = GetCorrectText(obj);
         }
-
-        public static NumericInputType GetInputType(TextBox element)
-        {
-            return (NumericInputType)element.GetValue(InputTypeProperty);
-        }
-
-        public static void SetInputType(TextBox element, NumericInputType value)
-        {
-            element.SetValue(InputTypeProperty, value);
-        }
-
-        #endregion InputType (and validation)
+        
+        #endregion Validation
     }
 
     /// <summary>

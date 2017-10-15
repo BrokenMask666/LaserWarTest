@@ -1,4 +1,5 @@
 ﻿using LaserwarTest.Presentation.Games;
+using LaserwarTest.Presentation.Games.Comparers;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -41,31 +42,56 @@ namespace LaserwarTest.Pages
 
         private void TextBlock_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            VMGameDetails.Sort(new PlayerComparer());
+            VMGameDetails.Sort(new PlayerComparer(desc: true));
         }
 
         private void TextBlock_Tapped_1(object sender, TappedRoutedEventArgs e)
         {
-            VMGameDetails.Sort(new PlayerByRatingComparer());
+            VMGameDetails.Sort(new PlayerByRatingComparer(desc: true));
 
         }
 
         private void TextBlock_Tapped_2(object sender, TappedRoutedEventArgs e)
         {
-            VMGameDetails.Sort(new PlayerByAccuracComparer());
+            VMGameDetails.Sort(new PlayerByAccuracComparer(desc: true));
 
         }
 
         private void TextBlock_Tapped_3(object sender, TappedRoutedEventArgs e)
         {
-            VMGameDetails.Sort(new PlayerByShotsComparer());
+            VMGameDetails.Sort(new PlayerByShotsComparer(desc: true));
         }
-        
-        private void OnListViewItemClick_LostFocus(object sender, ItemClickEventArgs e)
+
+        void ResetFocus()
         {
             object focusedElement = FocusManager.GetFocusedElement();
             if (focusedElement is Control control && control.FocusState != FocusState.Unfocused)
                 Focus(FocusState.Programmatic);
+        }
+        
+        private void OnListViewItemClick_LostFocus(object sender, ItemClickEventArgs e)
+        {
+            ResetFocus();
+        }
+
+        private void OnLostFocus_SavePlayerData(object sender, RoutedEventArgs e)
+        {
+            if (sender is Control control && control.DataContext is Player player)
+            {
+                if (control is TextBox tb)
+                {
+                    BindingExpression expr = tb.GetBindingExpression(TextBox.TextProperty);
+                    expr?.UpdateSource();
+                }
+
+                player.Save();
+            }
+        }
+
+        private void OnEnterUp_SavePlayerData(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key != Windows.System.VirtualKey.Enter) return;
+            ResetFocus();
         }
     }
 }
