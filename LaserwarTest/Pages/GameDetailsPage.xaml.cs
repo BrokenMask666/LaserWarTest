@@ -1,18 +1,10 @@
 ﻿using LaserwarTest.Presentation.Games;
 using LaserwarTest.Presentation.Games.Comparers;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+using LaserwarTest.UI.Controls;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 // Документацию по шаблону элемента "Пустая страница" см. по адресу https://go.microsoft.com/fwlink/?LinkId=234238
@@ -25,6 +17,8 @@ namespace LaserwarTest.Pages
     public sealed partial class GameDetailsPage : Page
     {
         VMGameDetails VMGameDetails { get; } = new VMGameDetails();
+
+        SortButton ActiveSortButton { set; get; }
 
         public GameDetailsPage()
         {
@@ -40,27 +34,41 @@ namespace LaserwarTest.Pages
             }
         }
 
-        private void TextBlock_Tapped(object sender, TappedRoutedEventArgs e)
+        private void SortByPlayerRequested(object sender, bool byDesc)
         {
-            VMGameDetails.Sort(new PlayerComparer(desc: true));
+            Sort(sender as SortButton, new PlayerComparer(desc: byDesc));
         }
 
-        private void TextBlock_Tapped_1(object sender, TappedRoutedEventArgs e)
+        private void SortByRatingRequested(object sender, bool byDesc)
         {
-            VMGameDetails.Sort(new PlayerByRatingComparer(desc: true));
-
-        }
-
-        private void TextBlock_Tapped_2(object sender, TappedRoutedEventArgs e)
-        {
-            VMGameDetails.Sort(new PlayerByAccuracComparer(desc: true));
+            Sort(sender as SortButton, new PlayerByRatingComparer(desc: byDesc));
 
         }
 
-        private void TextBlock_Tapped_3(object sender, TappedRoutedEventArgs e)
+        private void SortByAccuracyRequested(object sender, bool byDesc)
         {
-            VMGameDetails.Sort(new PlayerByShotsComparer(desc: true));
+            Sort(sender as SortButton, new PlayerByAccuracComparer(desc: byDesc));
+
         }
+
+        private void SortByShotsRequested(object sender, bool byDesc)
+        {
+            Sort(sender as SortButton, new PlayerByShotsComparer(desc: byDesc));
+        }
+
+        void Sort(SortButton sender, PlayerComparer comparer)
+        {
+            if (ActiveSortButton == null)
+                ActiveSortButton = sender;
+            else if (ActiveSortButton != sender)
+            {
+                ActiveSortButton.ResetSortRequest();
+                ActiveSortButton = sender;
+            }
+
+            VMGameDetails.Sort(comparer);
+        }
+
 
         void ResetFocus()
         {

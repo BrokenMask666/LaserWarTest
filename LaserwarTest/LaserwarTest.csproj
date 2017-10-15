@@ -182,6 +182,9 @@
     <Compile Include="UI\Controls\Extensions\TextBoxExtensions.cs" />
     <Compile Include="UI\Controls\Extensions\TextBoxNumericValidator.cs" />
     <Compile Include="UI\Controls\IconButton.cs" />
+    <Compile Include="UI\Controls\SortButton.xaml.cs">
+      <DependentUpon>SortButton.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\Controls\SoundPlayerIconButton.cs" />
     <Compile Include="UI\Dialogs\PlayerEditor.xaml.cs">
       <DependentUpon>PlayerEditor.xaml</DependentUpon>
@@ -270,6 +273,10 @@
     <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\Controls\SortButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\Dialogs\ErrorDialog.xaml">
       <SubType>Designer</SubType>

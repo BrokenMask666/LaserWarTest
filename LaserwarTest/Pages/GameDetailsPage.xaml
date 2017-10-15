@@ -12,6 +12,7 @@
     
     xmlns:ext="using:LaserwarTest.UI.Controls.Extensions"
     xmlns:converters="using:LaserwarTest.Commons.UI.Xaml.Converters"
+    xmlns:controls="using:LaserwarTest.UI.Controls"
     >
 
     <Page.Resources>
@@ -61,33 +62,57 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock
+                    <controls:SortButton
                         Grid.Column="0"
-                        Style="{StaticResource LW_TextBlockControlHeaderStyle}"
-                        Text="Игрок"
-                        Tapped="TextBlock_Tapped"
-                        />
+                        SortRequested="SortByPlayerRequested"
+                        >
+                        <controls:SortButton.InnerContent>
+                            <TextBlock
+                                Style="{StaticResource LW_TextBlockControlHeaderStyle}"
+                                FontSize="16"
+                                Text="Игрок"
+                                />        
+                        </controls:SortButton.InnerContent>
+                    </controls:SortButton>
 
-                    <TextBlock
+                    <controls:SortButton
                         Grid.Column="1"
-                        Style="{StaticResource LW_TextBlockControlHeaderStyle}"
-                        Text="Рейтинг"
-                        Tapped="TextBlock_Tapped_1"
-                        />
+                        SortRequested="SortByRatingRequested"
+                        >
+                        <controls:SortButton.InnerContent>
+                            <TextBlock
+                                Style="{StaticResource LW_TextBlockControlHeaderStyle}"
+                                FontSize="16"
+                                Text="Рейтинг"
+                                />
+                        </controls:SortButton.InnerContent>
+                    </controls:SortButton>
 
-                    <TextBlock
+                    <controls:SortButton
                         Grid.Column="2"
-                        Style="{StaticResource LW_TextBlockControlHeaderStyle}"
-                        Text="Точность"
-                        Tapped="TextBlock_Tapped_2"
-                        />
+                        SortRequested="SortByAccuracyRequested"
+                        >
+                        <controls:SortButton.InnerContent>
+                            <TextBlock
+                                Style="{StaticResource LW_TextBlockControlHeaderStyle}"
+                                FontSize="16"
+                                Text="Точность"
+                                />
+                        </controls:SortButton.InnerContent>
+                    </controls:SortButton>
 
-                    <TextBlock
+                    <controls:SortButton
                         Grid.Column="3"
-                        Style="{StaticResource LW_TextBlockControlHeaderStyle}"
-                        Text="Выстрелы"
-                        Tapped="TextBlock_Tapped_3"
-                        />
+                        SortRequested="SortByShotsRequested"
+                        >
+                        <controls:SortButton.InnerContent>
+                            <TextBlock
+                                Style="{StaticResource LW_TextBlockControlHeaderStyle}"
+                                FontSize="16"
+                                Text="Выстрелы"
+                                />
+                        </controls:SortButton.InnerContent>
+                    </controls:SortButton>
                 </Grid>
 
                 <ListView
