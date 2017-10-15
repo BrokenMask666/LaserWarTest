@@ -1,0 +1,83 @@
+﻿<UserControl
+    x:Class="LaserwarTest.UI.Dialogs.PlayerEditor"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:LaserwarTest.UI.Dialogs"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="550"
+    d:DesignWidth="550"
+    
+    xmlns:layouts="using:LaserwarTest.UI.Layouts"
+    xmlns:ext="using:LaserwarTest.UI.Controls.Extensions"
+    xmlns:converters="using:LaserwarTest.Commons.UI.Xaml.Converters"
+    >
+
+    <UserControl.Resources>
+        <converters:AdditionalSymbolConverter x:Key="AdditionalSymbolConverter"/>
+    </UserControl.Resources>
+
+    <layouts:DialogLayoutTemplate Background="White" Title="Редактирование игрока">
+        <StackPanel MinWidth="293">
+            <TextBox
+                Style="{StaticResource LW_TextBoxDefaultStyle}"
+                Header="Имя игрока"
+                ext:TextBoxExtensions.SelectTextOnFocus="True"
+                Text="{x:Bind Player.Name, Mode=TwoWay}"
+                />
+
+            <TextBox
+                Style="{StaticResource LW_TextBoxDefaultStyle}"
+                Margin="0,25,0,0"
+                Header="Рейтинг"
+                ext:TextBoxExtensions.SelectTextOnFocus="True"
+                ext:TextBoxNumericValidator.InputType="Integer"
+                MaxLength="10"
+                Text="{x:Bind Player.Rating, Mode=TwoWay}"
+                />
+
+            <TextBox
+                Style="{StaticResource LW_TextBoxDefaultStyle}"
+                Margin="0,25,0,0"
+                Header="Точность"
+                ext:TextBoxExtensions.SelectTextOnFocus="True"
+                ext:TextBoxExtensions.OnSelectionChangedIgnoreSymbol="%"
+                ext:TextBoxNumericValidator.IgnoredSymbol="%"
+                ext:TextBoxNumericValidator.InputType="Integer"
+                ext:TextBoxNumericValidator.MinValue="0"
+                ext:TextBoxNumericValidator.MaxValue="100"
+                MaxLength="4"
+                Text="{x:Bind Player.AccuracyPercentage, Mode=TwoWay, Converter={StaticResource AdditionalSymbolConverter}, ConverterParameter=%}"
+                />
+
+            <TextBox
+                Style="{StaticResource LW_TextBoxDefaultStyle}"
+                Margin="0,25,0,0"
+                Header="Выстрелы"
+                ext:TextBoxExtensions.SelectTextOnFocus="True"
+                ext:TextBoxNumericValidator.InputType="Integer"
+                MaxLength="10"
+                Text="{x:Bind Player.Shots, Mode=TwoWay}"
+                />
+        </StackPanel>
+
+        <layouts:DialogLayoutTemplate.CommandsBar>
+            <StackPanel Orientation="Horizontal">
+                <Button
+                    Style="{StaticResource LW_ButtonDefaultStyle}"
+                    Content="отменить"
+                    Tapped="CloseButton_Tapped"
+                    Margin="0,0,10,0"
+                    />
+
+                <Button
+                    Style="{StaticResource LW_ButtonAccentStyle}"
+                    Content="сохранить"
+                    Tapped="SaveButton_Tapped"
+                    />
+            </StackPanel>
+            
+        </layouts:DialogLayoutTemplate.CommandsBar>
+    </layouts:DialogLayoutTemplate>
+</UserControl>

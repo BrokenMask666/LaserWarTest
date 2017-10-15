@@ -1,5 +1,8 @@
-﻿using LaserwarTest.Data.DB;
+﻿using LaserwarTest.Core.UI.Popups;
+using LaserwarTest.Data.DB;
 using LaserwarTest.Presentation.Games.Comparers;
+using LaserwarTest.UI.Dialogs;
+using LaserwarTest.UI.Popups.Animations;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,18 +15,13 @@ namespace LaserwarTest.Presentation.Games
     public sealed class VMGameDetails : BaseViewModel
     {
         ObservableCollection<PlayersTeam> _teams;
-        PlayersTeam _Team;
+
+        Player EditedPlayer { set; get; }
 
         public ObservableCollection<PlayersTeam> Teams
         {
             set => SetProperty(ref _teams, value);
             get => _teams;
-        }
-
-        public PlayersTeam Team
-        {
-            set => SetProperty(ref _Team, value);
-            get => _Team;
         }
 
         public async Task Load(int gameID)
@@ -41,8 +39,6 @@ namespace LaserwarTest.Presentation.Games
             Teams = new ObservableCollection<PlayersTeam>(
                 teams.Select(team => new PlayersTeam(team, players)));
 
-            Team = Teams.First();
-
             Loaded();
         }
 
@@ -59,7 +55,29 @@ namespace LaserwarTest.Presentation.Games
 
             Loaded();
         }
-    }
 
-    
+        public void EditPlayer(Player player)
+        {
+            EditedPlayer = player;
+
+            PlayerEditor editor = new PlayerEditor(player.ID);
+            editor.PlayerSaved += Editor_PlayerSaved;
+
+            new PopupContent(editor, new ScalePopupOpenAnimation(), new ScalePopupCloseAnimation()).Open();
+        }
+
+        private void Editor_PlayerSaved(object sender, Player e)
+        {
+            if (EditedPlayer != null)
+            {
+                PlayersTeam oldTeam = Teams.FirstOrDefault(x => x.IsItemOfGroup(EditedPlayer));
+                oldTeam?.Remove(EditedPlayer);
+            }
+
+            PlayersTeam newTeam = Teams.FirstOrDefault(x => x.IsItemOfGroup(e));
+            newTeam?.Add(e);
+
+            EditedPlayer = null;
+        }
+    }
 }

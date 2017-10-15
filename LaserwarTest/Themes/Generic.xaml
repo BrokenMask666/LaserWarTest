@@ -231,6 +231,7 @@
     </Style>
 
     <Style TargetType="layouts:DialogLayoutTemplate">
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="layouts:DialogLayoutTemplate">
@@ -253,6 +254,8 @@
                                 Grid.Row="1"
                                 Margin="0,0,0,10"
                                 Content="{TemplateBinding Content}"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                 />
 
                             <ContentPresenter

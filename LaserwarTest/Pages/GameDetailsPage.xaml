@@ -132,13 +132,20 @@
                     </ListView.ItemContainerStyle>
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="games:Player">
-                            <Grid>
+                            <Grid IsDoubleTapEnabled="True" DoubleTapped="ListViewItem_DoubleTapped">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" MinWidth="150" MaxWidth="350"/>
                                     <ColumnDefinition Width="*" MinWidth="50" MaxWidth="250"/>
                                     <ColumnDefinition Width="*" MinWidth="50" MaxWidth="250"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
+
+                                <!--Этот тут чтобы DowbleTap работал правильно-->
+                                <TextBlock
+                                    Grid.ColumnSpan="4"
+                                    VerticalAlignment="Stretch"
+                                    HorizontalAlignment="Stretch"
+                                    />
 
                                 <Rectangle
                                     Grid.ColumnSpan="4"
@@ -153,7 +160,7 @@
                                     Grid.Column="0"
                                     Style="{StaticResource TextBoxParamEditorStyle}"
                                     VerticalAlignment="Top"
-                                    MinWidth="250"
+                                    MinWidth="200"
                                     Text="{Binding Name, Mode=TwoWay}"
                                     LostFocus="OnLostFocus_SavePlayerData"
                                     KeyUp="OnEnterUp_SavePlayerData"
@@ -187,7 +194,7 @@
                                     Grid.Column="3"
                                     Style="{StaticResource TextBoxParamEditorStyle}"
                                     ext:TextBoxNumericValidator.InputType="Integer"
-                                    MaxLength="100"
+                                    MaxLength="10"
                                     Text="{Binding Shots, Mode=TwoWay}"
                                     LostFocus="OnLostFocus_SavePlayerData"
                                     KeyUp="OnEnterUp_SavePlayerData"

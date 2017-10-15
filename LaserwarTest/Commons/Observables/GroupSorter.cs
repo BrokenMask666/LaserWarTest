@@ -40,7 +40,7 @@ namespace LaserwarTest.Commons.Observables
             _itemsSorter.Clear();
         }
 
-        public void IsItemOfGroup(TItem item) => _groupSorterSelector(Group, item);
+        public bool IsItemOfGroup(TItem item) => _groupSorterSelector(Group, item);
 
         public void Add(TItem item)
         {

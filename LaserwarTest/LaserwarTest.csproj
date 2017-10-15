@@ -183,6 +183,9 @@
     <Compile Include="UI\Controls\Extensions\TextBoxNumericValidator.cs" />
     <Compile Include="UI\Controls\IconButton.cs" />
     <Compile Include="UI\Controls\SoundPlayerIconButton.cs" />
+    <Compile Include="UI\Dialogs\PlayerEditor.xaml.cs">
+      <DependentUpon>PlayerEditor.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\Layouts\BackButton.cs" />
     <Compile Include="UI\Layouts\DialogLayoutTemplate.cs" />
     <Compile Include="UI\Layouts\PageLayoutTemplate.cs" />
@@ -269,6 +272,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="UI\Dialogs\ErrorDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Dialogs\PlayerEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

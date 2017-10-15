@@ -93,5 +93,16 @@ namespace LaserwarTest.Pages
             if (e.Key != Windows.System.VirtualKey.Enter) return;
             ResetFocus();
         }
+
+        private void ListViewItem_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
+        {
+            if (e.OriginalSource is FrameworkElement tappedElement)
+            {
+                if (tappedElement.DataContext is Player player)
+                {
+                    VMGameDetails.EditPlayer(player);
+                }
+            }
+        }
     }
 }

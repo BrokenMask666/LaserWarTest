@@ -628,7 +628,7 @@
                 <Setter Property="Background" Value="{ThemeResource LW_ButtonBackgroundBrush}"/>
                 <Setter Property="Foreground" Value="{ThemeResource LW_ButtonForegroundBrush}"/>
                 <Setter Property="BorderBrush" Value="{ThemeResource LW_ButtonAccentBackgroundBrush}"/>
-                <Setter Property="BorderThickness" Value="{ThemeResource ButtonBorderThemeThickness}"/>
+                <Setter Property="BorderThickness" Value="1"/>
                 <Setter Property="HorizontalAlignment" Value="Left"/>
                 <Setter Property="VerticalAlignment" Value="Center"/>
                 <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}"/>
