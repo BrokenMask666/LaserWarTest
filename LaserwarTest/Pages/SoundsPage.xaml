@@ -14,6 +14,14 @@
     xmlns:sounds="using:LaserwarTest.Presentation.Sounds"
     >
 
+    <Page.Transitions>
+        <TransitionCollection>
+            <NavigationThemeTransition>
+                <EntranceNavigationTransitionInfo/>
+            </NavigationThemeTransition>
+        </TransitionCollection>
+    </Page.Transitions>
+
     <Page.Resources>
         <converters:EnumToVisibilityConverter x:Key="EnumToVisibilityConverter"/>
     </Page.Resources>

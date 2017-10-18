@@ -1,6 +1,8 @@
-﻿using LaserwarTest.Presentation.Games;
+﻿using LaserwarTest.Pages.VK;
+using LaserwarTest.Presentation.Games;
 using LaserwarTest.Presentation.Games.Comparers;
 using LaserwarTest.UI.Controls;
+using LaserwarTest.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
@@ -111,6 +113,16 @@ namespace LaserwarTest.Pages
                     VMGameDetails.EditPlayer(player);
                 }
             }
+        }
+
+        private void PublishToVKButton_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            new VKWorkflowPopupContent(typeof(VKPublishToGroupSelectorPage)).Open(isModal: true);
+        }
+
+        private void SaveToPDF_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+
         }
     }
 }

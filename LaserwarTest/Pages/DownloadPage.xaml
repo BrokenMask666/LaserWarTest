@@ -13,6 +13,14 @@
     xmlns:converters="using:LaserwarTest.Commons.UI.Xaml.Converters"
     >
 
+    <Page.Transitions>
+        <TransitionCollection>
+            <NavigationThemeTransition>
+                <EntranceNavigationTransitionInfo/>
+            </NavigationThemeTransition>
+        </TransitionCollection>
+    </Page.Transitions>
+
     <Page.Resources>
         <converters:TextToVisibilityConverter x:Key="TextToVisibilityConverter"/>
     </Page.Resources>

@@ -15,6 +15,14 @@
     xmlns:controls="using:LaserwarTest.UI.Controls"
     >
 
+    <Page.Transitions>
+        <TransitionCollection>
+            <NavigationThemeTransition>
+                <DrillInNavigationTransitionInfo/>
+            </NavigationThemeTransition>
+        </TransitionCollection>
+    </Page.Transitions>
+
     <Page.Resources>
         <converters:AdditionalSymbolConverter x:Key="AdditionalSymbolConverter"/>
 
@@ -34,15 +42,19 @@
                     Orientation="Horizontal"
                     HorizontalAlignment="Right"
                     >
-                    <Button 
+                    <Button
+                        x:Name="PublishToVKButton"
                         Style="{StaticResource LW_ButtonDefaultStyle}"
                         Content="опубликовать в вк"
+                        Tapped="PublishToVKButton_Tapped"
                         />
 
                     <Button
+                        x:Name="SaveToPDF"
                         Style="{StaticResource LW_ButtonAccentStyle}" 
                         Margin="10,0,0,0"
                         Content="сохранить как PDF"
+                        Tapped="SaveToPDF_Tapped"
                         />
 
                 </StackPanel>
