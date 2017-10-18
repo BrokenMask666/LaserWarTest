@@ -94,6 +94,8 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <Content Include="Assets\Fonts\verdanab.ttf" />
+    <Content Include="Assets\Fonts\verdana.ttf" />
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
@@ -148,6 +150,7 @@
     <Compile Include="Data\DB\Tables\PlayerTable.cs" />
     <Compile Include="Data\DB\Tables\SoundTable.cs" />
     <Compile Include="Data\DB\Tables\TeamTable.cs" />
+    <Compile Include="Data\PDF\PDFGameInfoGenerator.cs" />
     <Compile Include="Data\Server\Requests\DownloadRequestIDGenerator.cs" />
     <Compile Include="Data\Server\Requests\Json\JsonServerResponse.cs" />
     <Compile Include="Data\Server\Requests\Xml\XmlGameData.cs" />
@@ -321,7 +324,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Core\Networking\Social\VK\Requests\" />
+    <Reference Include="Xfinium.Pdf.Uwp">
+      <HintPath>.\Xfinium.Pdf.Uwp.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

@@ -32,7 +32,7 @@ namespace LaserwarTest.Pages
             if (e.Parameter is Game game)
             {
                 PageLayout.Title = game.Name;
-                VMGameDetails.Load(game.ID);
+                VMGameDetails.Load(game);
             }
         }
 
@@ -122,7 +122,7 @@ namespace LaserwarTest.Pages
 
         private void SaveToPDF_Tapped(object sender, TappedRoutedEventArgs e)
         {
-
+            VMGameDetails.SaveToPDF();
         }
     }
 }

@@ -3,9 +3,21 @@ using LaserwarTest.Data.DB;
 using LaserwarTest.Presentation.Games.Comparers;
 using LaserwarTest.UI.Dialogs;
 using LaserwarTest.UI.Popups.Animations;
+using System;
+using System.IO;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using Windows.Foundation;
+using Windows.Storage;
+using Windows.Storage.Streams;
+using Xfinium.Pdf;
+using Xfinium.Pdf.Graphics;
+using Xfinium.Pdf.Graphics.FormattedContent;
+using Windows.System;
+using LaserwarTest.Data.PDF;
+using System.Collections.Generic;
+using LaserwarTest.UI.Popups;
 
 namespace LaserwarTest.Presentation.Games
 {
@@ -14,23 +26,27 @@ namespace LaserwarTest.Presentation.Games
     /// </summary>
     public sealed class VMGameDetails : BaseViewModel
     {
-        ObservableCollection<PlayersTeam> _teams;
+        Game _game;
+
+        ObservableCollection<PlayersTeam> _playerTeams;
 
         Player EditedPlayer { set; get; }
 
         public ObservableCollection<PlayersTeam> Teams
         {
-            set => SetProperty(ref _teams, value);
-            get => _teams;
+            set => SetProperty(ref _playerTeams, value);
+            get => _playerTeams;
         }
 
-        public async Task Load(int gameID)
+        public async Task Load(Game game)
         {
             await Loading(0);
 
+            _game = game;
+
             LocalDB localDB = DBManager.GetLocalDB();
 
-            var teamsData = await localDB.Teams.GetAll(x => x.GameID == gameID);
+            var teamsData = await localDB.Teams.GetAll(x => x.GameID == game.ID);
             var playersData = await localDB.Players.GetAll(x => teamsData.Any(team => team.ID == x.TeamID));
 
             var teams = teamsData.Select(teamData => new Team(teamData));
@@ -78,6 +94,42 @@ namespace LaserwarTest.Presentation.Games
             newTeam?.Add(e);
 
             EditedPlayer = null;
+        }
+
+        public async Task SaveToPDF()
+        {
+            await Loading();
+
+            LocalDB localDB = DBManager.GetLocalDB();
+
+            var teamsData = await localDB.Teams.GetAll(x => x.GameID == _game.ID);
+            var playersData = await localDB.Players.GetAll(x => teamsData.Any(team => team.ID == x.TeamID));
+
+            var teams = teamsData.Select(teamData => new Team(teamData));
+            var players = playersData.Select(playerData => new Player(playerData));
+
+            var doc = await new PDFGameInfoGenerator().GenerateGamePDF(_game, teams, players);
+
+            try
+            {
+                StorageFile pdfFile = await ApplicationData.Current.LocalFolder.CreateFileAsync("doc.pdf", CreationCollisionOption.ReplaceExisting);
+                using (var pdfStream = await pdfFile.OpenAsync(FileAccessMode.ReadWrite))
+                using (Stream stm = pdfStream.AsStream())
+                {
+                    doc.Save(stm);
+                    await stm.FlushAsync();
+                }
+
+                await Launcher.LaunchFileAsync(pdfFile);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                new ErrorPopupContent("Не удалось сохранить файл", "Возможно, файл открыт в другом приложении").Open();
+            }
+            finally
+            {
+                Loaded();
+            }
         }
     }
 }
