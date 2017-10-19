@@ -22,15 +22,18 @@ namespace LaserwarTest.UI.Dialogs
         public event EventHandler CanClose;
 
         Type RedirectPage { get; }
+        object RedirectPageParameter { get; }
 
         VKError LastError { set; get; }
+        object LastParameter { set; get; }
 
         /// <summary>
         /// Создает новое окно, которое ведет на страницу страницу авторизации ВКонтакте,
         /// а затем перенавигирует на указанную страницу
         /// </summary>
         /// <param name="redirectPageType">Страница, открывающаяся после успешной авторизации</param>
-        public VKWorkflowDialog(Type redirectPageType)
+        /// <param name="redirectPageParameter">Параметры навигации для этой редирект-страницы</param>
+        public VKWorkflowDialog(Type redirectPageType, object redirectPageParameter)
         {
             InitializeComponent();
 
@@ -38,6 +41,7 @@ namespace LaserwarTest.UI.Dialogs
                 throw new ArgumentException($"Page must be a subclass of {nameof(VKPopupPage)}");
 
             RedirectPage = redirectPageType;
+            RedirectPageParameter = redirectPageParameter;
 
             Frame.Navigating += Frame_Navigating;
             Frame.Navigated += Frame_Navigated;
@@ -46,13 +50,15 @@ namespace LaserwarTest.UI.Dialogs
             if (vkApiInfo.AccessToken == null)
                 Frame.Navigate(typeof(VKAuthorizationPage), null, new SuppressNavigationTransitionInfo());
             else
-                Frame.Navigate(RedirectPage, null);
+                Frame.Navigate(RedirectPage, RedirectPageParameter);
         }
 
         private void Frame_Navigated(object sender, NavigationEventArgs e)
         {
             if (e.Content is VKPopupPage vkPage)
             {
+                LastParameter = e.Parameter;
+
                 Layout.Title = vkPage.Title;
 
                 vkPage.LoadingSent += OnLoadingSent;
@@ -66,7 +72,7 @@ namespace LaserwarTest.UI.Dialogs
 
         private void OnAuthorizationCompleted(object sender, EventArgs e)
         {
-            Frame.Navigate(RedirectPage, null);
+            Frame.Navigate(RedirectPage, RedirectPageParameter);
         }
 
         private void Frame_Navigating(object sender, NavigatingCancelEventArgs e)
@@ -112,7 +118,7 @@ namespace LaserwarTest.UI.Dialogs
             else
             {
                 if (LastError.Renavigate && Frame.Content is VKPopupPage)
-                    Frame.Navigate(Frame.Content.GetType(), null, new SuppressNavigationTransitionInfo());
+                    Frame.Navigate(Frame.Content.GetType(), LastParameter, new SuppressNavigationTransitionInfo());
             }
         }
 

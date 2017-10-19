@@ -18,6 +18,8 @@ using Windows.System;
 using LaserwarTest.Data.PDF;
 using System.Collections.Generic;
 using LaserwarTest.UI.Popups;
+using LaserwarTest.Pages.VK;
+using LaserwarTest.Pages;
 
 namespace LaserwarTest.Presentation.Games
 {
@@ -96,10 +98,8 @@ namespace LaserwarTest.Presentation.Games
             EditedPlayer = null;
         }
 
-        public async Task SaveToPDF()
+        async Task<PdfFixedDocument> GeneratePDF()
         {
-            await Loading();
-
             LocalDB localDB = DBManager.GetLocalDB();
 
             var teamsData = await localDB.Teams.GetAll(x => x.GameID == _game.ID);
@@ -108,7 +108,14 @@ namespace LaserwarTest.Presentation.Games
             var teams = teamsData.Select(teamData => new Team(teamData));
             var players = playersData.Select(playerData => new Player(playerData));
 
-            var doc = await new PDFGameInfoGenerator().GenerateGamePDF(_game, teams, players);
+            return await new PDFGameInfoGenerator().GenerateGamePDF(_game, teams, players);
+        }
+
+        public async Task SaveToPDF()
+        {
+            await Loading();
+
+            var doc = await GeneratePDF();
 
             try
             {
@@ -124,7 +131,46 @@ namespace LaserwarTest.Presentation.Games
             }
             catch (UnauthorizedAccessException)
             {
-                new ErrorPopupContent("Не удалось сохранить файл", "Возможно, файл открыт в другом приложении").Open();
+                ShowError("Не удалось сохранить файл", "Возможно, файл открыт в другом приложении");
+            }
+            finally
+            {
+                Loaded();
+            }
+        }
+
+        public async Task PublishToVK()
+        {
+            await Loading();
+
+            string screenshotName = "screenshot.png";
+            string pdfName = "attachementDoc.pdf";
+
+            try
+            {
+                await AppShell.GetCurrent().MakeScreenshot(screenshotName);
+
+                var doc = await GeneratePDF();
+
+                StorageFile pdfFile = await ApplicationData.Current.LocalFolder.CreateFileAsync(pdfName, CreationCollisionOption.ReplaceExisting);
+                using (var pdfStream = await pdfFile.OpenAsync(FileAccessMode.ReadWrite))
+                using (Stream stm = pdfStream.AsStream())
+                {
+                    doc.Save(stm);
+                    await stm.FlushAsync();
+                }
+
+                new VKWorkflowPopupContent(
+                    typeof(VKPublishToGroupSelectorPage),
+                    new VKPublishGameInfoToGroupNavigationParameters()
+                    {
+                        PdfFileName = pdfName,
+                        ScreenshotFileName = screenshotName,
+                    }).Open(isModal: true);
+            }
+            catch (Exception)
+            {
+                ShowError("Не удалось создать вложения");
             }
             finally
             {

@@ -1,9 +1,12 @@
-﻿using LaserwarTest.Core.UI.Popups;
+﻿using LaserwarTest.Commons.UI.Renderer;
+using LaserwarTest.Core.UI.Popups;
 using LaserwarTest.UI.SideMenu;
 using System;
+using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
+using Windows.UI.Xaml.Media.Imaging;
 
 // Документацию по шаблону элемента "Пустая страница" см. по адресу https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -61,6 +64,11 @@ namespace LaserwarTest.Pages
 
             _loadRequests--;
             if (_loadRequests == 0) ToState(LoadedState.Name);
+        }
+
+        public async Task MakeScreenshot(string fileName)
+        {
+            await new ScreenshotMaker().RenderElementAndSave(AppContent, fileName);
         }
     }
 

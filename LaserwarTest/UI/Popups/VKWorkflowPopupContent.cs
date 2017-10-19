@@ -10,8 +10,8 @@ namespace LaserwarTest.UI.Popups
     {
         VKWorkflowDialog Dialog => Content as VKWorkflowDialog;
 
-        public VKWorkflowPopupContent(Type redirectPageType, IPopupContentAnimation openAnimation = null, IPopupContentAnimation closeAnimation = null) : base(
-            new VKWorkflowDialog(redirectPageType) { Width = 760, Height = 605 },
+        public VKWorkflowPopupContent(Type redirectPageType, object redirectPageParameter, IPopupContentAnimation openAnimation = null, IPopupContentAnimation closeAnimation = null) : base(
+            new VKWorkflowDialog(redirectPageType, redirectPageParameter) { Width = 760, Height = 605 },
             openAnimation ?? new ScalePopupOpenAnimation(),
             closeAnimation ?? new ScalePopupCloseAnimation())
         {

@@ -26,81 +26,81 @@
         <converters:EnumToVisibilityConverter x:Key="EnumToVisibilityConverter"/>
     </Page.Resources>
 
-    <Grid>
-        <layouts:PageLayoutTemplate Background="White" Title="Звуки">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="45"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
+    <layouts:PageLayoutTemplate Background="White" Title="Звуки">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="45"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
 
-                <Grid Margin="0,0,50,0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" MinWidth="150" MaxWidth="350"/>
-                        <ColumnDefinition Width="*" MinWidth="50" MaxWidth="250"/>
-                        <ColumnDefinition Width="*" MinWidth="50" MaxWidth="250"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
+            <Grid Margin="0,0,50,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" MinWidth="150" MaxWidth="350"/>
+                    <ColumnDefinition Width="*" MinWidth="50" MaxWidth="250"/>
+                    <ColumnDefinition Width="*" MinWidth="50" MaxWidth="250"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
 
-                    <TextBlock
+                <TextBlock
                         Grid.Column="0"
                         Style="{StaticResource LW_TextBlockControlHeaderStyle}"
                         Text="Имя файла"
                         />
 
-                    <TextBlock
+                <TextBlock
                         Grid.Column="1"
                         Style="{StaticResource LW_TextBlockControlHeaderStyle}"
                         Text="Размер файла"
                         />
 
-                    <TextBlock
+                <TextBlock
                         Grid.Column="2"
                         Style="{StaticResource LW_TextBlockControlHeaderStyle}"
                         Text="Загрузка файла"
                         />
 
-                    <TextBlock
+                <TextBlock
                         Grid.Column="3"
                         Style="{StaticResource LW_TextBlockControlHeaderStyle}"
                         Text="Воспроизвести"
                         />
-                </Grid>
+            </Grid>
 
-                <ListView
-                    Grid.Row="1"
-                    SelectionMode="None"
-                    ItemsSource="{x:Bind VMSounds.Items, Mode=OneWay}"
-                    >
-                    <ListView.ItemTemplate>
-                        <DataTemplate x:DataType="sounds:Sound">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" MinWidth="150" MaxWidth="350"/>
-                                    <ColumnDefinition Width="*" MinWidth="50" MaxWidth="250"/>
-                                    <ColumnDefinition Width="*" MinWidth="50" MaxWidth="250"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
+            <ListView
+                x:Name="SoundsList"
+                Grid.Row="1"
+                SelectionMode="None"
+                ItemsSource="{x:Bind VMSounds.Items, Mode=OneWay}"
+                >
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="sounds:Sound">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" MinWidth="150" MaxWidth="350"/>
+                                <ColumnDefinition Width="*" MinWidth="50" MaxWidth="250"/>
+                                <ColumnDefinition Width="*" MinWidth="50" MaxWidth="250"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
 
-                                <TextBlock
+                            <TextBlock
                                     Grid.Column="0"
                                     Style="{StaticResource LW_TextBlockDefaultStyle}"
                                     Text="{x:Bind Name}"
                                     />
 
-                                <TextBlock
+                            <TextBlock
                                     Grid.Column="1"
                                     Style="{StaticResource LW_TextBlockDefaultStyle}"
                                     Text="{x:Bind Size.DisplayText}"
                                     />
 
-                                <Grid Grid.Column="2">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="auto"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
 
-                                    <controls:DownloadIconButton
+                                <controls:DownloadIconButton
                                         Grid.Column="0"
                                         HorizontalAlignment="Left"
                                         State="{x:Bind SoundDownloader.State, Mode=OneWay}"
@@ -108,7 +108,7 @@
                                         IsEnabled="{x:Bind SoundDownloader.IsEnabled, Mode=OneWay}"
                                         />
 
-                                    <controls:ContentProgressBar
+                                <controls:ContentProgressBar
                                         Grid.Column="1"
                                         Margin="10,0,0,0"
                                         Width="150"
@@ -116,8 +116,8 @@
                                         Content="{x:Bind SoundDownloader.StateMessage, Mode=OneWay}"
                                         Visibility="{x:Bind SoundDownloader.State, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Downloading}"
                                         />
-                                    
-                                    <TextBlock
+
+                                <TextBlock
                                         Grid.Column="1"
                                         Margin="10,0,0,0"
                                         FontSize="12"
@@ -125,15 +125,15 @@
                                         Text="{x:Bind SoundDownloader.StateMessage, Mode=OneWay}"
                                         Visibility="{x:Bind SoundDownloader.State, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Downloaded}"
                                         />
-                                </Grid>
+                            </Grid>
 
-                                <Grid Grid.Column="3">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="auto"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="3">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
 
-                                    <controls:SoundPlayerIconButton
+                                <controls:SoundPlayerIconButton
                                         Grid.Column="0"
                                         HorizontalAlignment="Left"
                                         State="{x:Bind SoundPlayer.State, Mode=OneWay}"
@@ -141,7 +141,7 @@
                                         IsEnabled="{x:Bind SoundPlayer.IsEnabled, Mode=OneWay}"
                                         />
 
-                                    <controls:ContentProgressBar
+                                <controls:ContentProgressBar
                                         Grid.Column="1"
                                         Margin="10,0,0,0"
                                         Width="150"
@@ -149,13 +149,32 @@
                                         Content="{x:Bind SoundPlayer.StateMessage, Mode=OneWay}"
                                         Visibility="{x:Bind SoundPlayer.State, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Playing}"
                                         />
-                                </Grid>
                             </Grid>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </Grid>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
 
-        </layouts:PageLayoutTemplate>
-    </Grid>
+            <TextBlock
+                x:Name="NoData"
+                Style="{StaticResource LW_TextBlockDefaultStyle}"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center"
+                Text="Данные не получены"
+                Visibility="Collapsed"
+                />
+        </Grid>
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="DataStates">
+                <VisualState x:Name="HasDataState"/>
+                <VisualState x:Name="NoDataState">
+                    <VisualState.Setters>
+                        <Setter Target="NoData.Visibility" Value="Visible"/>
+                        <Setter Target="SoundsList.Visibility" Value="Collapsed"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+    </layouts:PageLayoutTemplate>
 </Page>

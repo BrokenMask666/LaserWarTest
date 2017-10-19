@@ -82,25 +82,25 @@ namespace LaserwarTest.Presentation
             GetStringRequest request = await GetStringRequest.Execute(url);
             switch (request.Result)
             {
-                case GetStringRequestResult.NoNetworkConnection:
+                case RequestResult.NoNetworkConnection:
                     if (!ignoreErrors)
                         ShowError("Нет подключения к интернету", "Проверьте подключение к интернету и повторите попытку");
 
                     return null;
 
-                case GetStringRequestResult.Error:
+                case RequestResult.Error:
                     if (!ignoreErrors)
                         ShowError("Не удалось загрузить данные");
 
                     return null;
 
-                case GetStringRequestResult.NoResponse:
+                case RequestResult.NoResponse:
                     if (!ignoreErrors)
                         ShowError("Удаленыый сервер не отвечает");
 
                     return null;
 
-                case GetStringRequestResult.Cancelled:
+                case RequestResult.Cancelled:
                     return null;
             }
 

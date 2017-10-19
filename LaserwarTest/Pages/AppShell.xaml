@@ -62,6 +62,7 @@
 
     <Grid>
         <SplitView
+            x:Name="AppContent"
             Background="White"
             PaneBackground="{StaticResource LW_SideMenuPaneBackgroundBrush}"
             DisplayMode="CompactInline"

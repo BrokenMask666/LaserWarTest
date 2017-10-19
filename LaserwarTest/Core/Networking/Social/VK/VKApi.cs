@@ -1,4 +1,7 @@
-﻿using LaserwarTest.Core.Networking.Social.VK.Groups;
+﻿using LaserwarTest.Core.Networking.Social.VK.Docs;
+using LaserwarTest.Core.Networking.Social.VK.Groups;
+using LaserwarTest.Core.Networking.Social.VK.Photos;
+using LaserwarTest.Core.Networking.Social.VK.Wall;
 using LaserwarTest.Management.Settings;
 using LaserwarTest.Management.SettingsStorage.Storages;
 using System;
@@ -49,7 +52,7 @@ namespace LaserwarTest.Core.Networking.Social.VK
 
     public class VKApiBase
     {
-        protected VKApiInfo ApiInfo { get; } = new VKApiInfo();
+        public VKApiInfo ApiInfo { get; } = new VKApiInfo();
     }
 
     /// <summary>
@@ -69,9 +72,14 @@ namespace LaserwarTest.Core.Networking.Social.VK
         public event EventHandler<VKAuthorizationError> AuthorizationFailed;
 
         Lazy<VKGroupsApi> _groups = new Lazy<VKGroupsApi>(() => new VKGroupsApi());
+        Lazy<VKPhotosApi> _photos = new Lazy<VKPhotosApi>(() => new VKPhotosApi());
+        Lazy<VKWallApi> _wall = new Lazy<VKWallApi>(() => new VKWallApi());
+        Lazy<VKDocsApi> _docs = new Lazy<VKDocsApi>(() => new VKDocsApi());
 
         public VKGroupsApi Groups => _groups.Value;
-
+        public VKPhotosApi Photos => _photos.Value;
+        public VKWallApi Wall => _wall.Value;
+        public VKDocsApi Docs => _docs.Value;
 
         public void Authorize(WebView web, VKUserPermissions userPermissions)
         {
@@ -149,6 +157,7 @@ namespace LaserwarTest.Core.Networking.Social.VK
         Groups = 1 << 0,
         Docs = 1 << 1,
         Wall = 1 << 2,
-        Friends = 1 << 3
+        Friends = 1 << 3,
+        Photos = 1 << 4
     }
 }

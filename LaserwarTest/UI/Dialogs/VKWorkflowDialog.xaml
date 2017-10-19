@@ -84,6 +84,7 @@
                 <VisualState x:Name="HasErrorState">
                     <VisualState.Setters>
                         <Setter Target="ErrorPanel.Visibility" Value="Visible"/>
+                        <Setter Target="Frame.Visibility" Value="Collapsed"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>

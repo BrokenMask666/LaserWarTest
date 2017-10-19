@@ -117,7 +117,7 @@ namespace LaserwarTest.Pages
 
         private void PublishToVKButton_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            new VKWorkflowPopupContent(typeof(VKPublishToGroupSelectorPage)).Open(isModal: true);
+            VMGameDetails.PublishToVK();
         }
 
         private void SaveToPDF_Tapped(object sender, TappedRoutedEventArgs e)

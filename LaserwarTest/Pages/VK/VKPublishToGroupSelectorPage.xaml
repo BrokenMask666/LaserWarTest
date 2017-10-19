@@ -36,6 +36,8 @@
             Grid.Row="1"
             Margin="0,25,0,0"
             SelectionMode="None"
+            IsItemClickEnabled="True"
+            ItemClick="Groups_ItemClick"
             >
             <ListView.ItemTemplate>
                 <DataTemplate>
@@ -76,5 +78,27 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+
+        <TextBlock
+            x:Name="NoData"
+            Grid.Row="1"
+            Style="{StaticResource LW_TextBlockDefaultStyle}"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Center"
+            Text="Сообществ, доступных для публикации, не обнаружено"
+            Visibility="Collapsed"
+            />
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="DataStates">
+                <VisualState x:Name="HasDataState"/>
+                <VisualState x:Name="NoDataState">
+                    <VisualState.Setters>
+                        <Setter Target="NoData.Visibility" Value="Visible"/>
+                        <Setter Target="Groups.Visibility" Value="Collapsed"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
     </Grid>
 </local:VKPopupPage>

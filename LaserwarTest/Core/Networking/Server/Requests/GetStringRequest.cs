@@ -19,9 +19,9 @@ namespace LaserwarTest.Core.Networking.Server.Requests
         /// <summary>
         /// Получает результат выполнения запроса
         /// </summary>
-        public GetStringRequestResult Result { get; }
+        public RequestResult Result { get; }
 
-        protected GetStringRequest(GetStringRequestResult result, string response)
+        protected GetStringRequest(RequestResult result, string response)
         {
             Result = result;
             Response = response;
@@ -35,23 +35,23 @@ namespace LaserwarTest.Core.Networking.Server.Requests
         public static async Task<GetStringRequest> Execute(string requestUri)
         {
             if (!NetworkInterface.GetIsNetworkAvailable())
-                return new GetStringRequest(GetStringRequestResult.NoNetworkConnection, null);
+                return new GetStringRequest(RequestResult.NoNetworkConnection, null);
 
             HttpClient client = new HttpClient();
             string response = null;
-            GetStringRequestResult result = GetStringRequestResult.Success;
+            RequestResult result = RequestResult.Success;
 
             try { response = await client.GetStringAsync(requestUri); }
             catch (TaskCanceledException ex)
             {
                 if (ex.CancellationToken.IsCancellationRequested)
-                    result = GetStringRequestResult.Cancelled;
+                    result = RequestResult.Cancelled;
                 else
-                    result = GetStringRequestResult.NoResponse;
+                    result = RequestResult.NoResponse;
             }
             catch (Exception)
             {
-                result = GetStringRequestResult.Error;
+                result = RequestResult.Error;
             }
 
             return new GetStringRequest(result, response);
@@ -59,9 +59,9 @@ namespace LaserwarTest.Core.Networking.Server.Requests
     }
 
     /// <summary>
-    /// Перечисление возможных результатов выполнения Get-запроса
+    /// Перечисление возможных результатов выполнения Http-запроса
     /// </summary>
-    public enum GetStringRequestResult
+    public enum RequestResult
     {
         /// <summary>
         /// Запрос был успешно выполнен

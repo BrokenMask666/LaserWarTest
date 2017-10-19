@@ -1,0 +1,55 @@
+﻿<local:VKPopupPage
+    x:Class="LaserwarTest.Pages.VK.VKPublishGameInfoToGroupPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:LaserwarTest.Pages.VK"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="White">
+        <StackPanel
+            x:Name="PublichPanel"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Center"
+            >
+            <TextBox
+                x:Name="PublishingMessageTextBox"
+                Style="{StaticResource LW_TextBoxDefaultStyle}"
+                PlaceholderText="Введите текст сообщения"
+                MinWidth="300"
+                />
+
+            <Button
+                Style="{StaticResource LW_ButtonAccentStyle}"
+                HorizontalAlignment="Center"
+                Margin="0,15,0,0"
+                Content="Опубликовать"
+                Tapped="OnPublishButton_Tapped"
+                />
+
+        </StackPanel>
+        
+        <TextBlock
+            x:Name="SuccessTextBlock"
+            Style="{StaticResource LW_TextBlockDefaultStyle}"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Center"
+            Text="Данные успешно опубликованы"
+            Visibility="Collapsed"
+            />
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="CommonStates">
+                <VisualState x:Name="NormalState"/>
+                <VisualState x:Name="SuccessState">
+                    <VisualState.Setters>
+                        <Setter Target="PublichPanel.Visibility" Value="Collapsed"/>
+                        <Setter Target="SuccessTextBlock.Visibility" Value="Visible"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+            
+        </VisualStateManager.VisualStateGroups>
+    </Grid>
+</local:VKPopupPage>

@@ -21,77 +21,95 @@
         </TransitionCollection>
     </Page.Transitions>
 
-    <Grid>
-        <layouts:PageLayoutTemplate Background="White" Title="Игры">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="45"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
+    <layouts:PageLayoutTemplate Background="White" Title="Игры">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="45"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
 
-                <Grid Margin="0,0,50,0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" MinWidth="150" MaxWidth="400"/>
-                        <ColumnDefinition Width="*" MinWidth="50" MaxWidth="300"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
+            <Grid Margin="0,0,50,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" MinWidth="150" MaxWidth="400"/>
+                    <ColumnDefinition Width="*" MinWidth="50" MaxWidth="300"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
 
-                    <TextBlock
+                <TextBlock
                         Grid.Column="0"
                         Style="{StaticResource LW_TextBlockControlHeaderStyle}"
                         Text="Название игры"
                         />
 
-                    <TextBlock
+                <TextBlock
                         Grid.Column="1"
                         Style="{StaticResource LW_TextBlockControlHeaderStyle}"
                         Text="Дата проведения"
                         />
 
-                    <TextBlock
+                <TextBlock
                         Grid.Column="2"
                         Style="{StaticResource LW_TextBlockControlHeaderStyle}"
                         Text="Количество игроков"
                         />
-                </Grid>
+            </Grid>
 
-                <ListView
-                    Grid.Row="1"
-                    SelectionMode="None"
-                    ItemsSource="{x:Bind VMGames.Items, Mode=OneWay}"
-                    >
-                    <ListView.ItemTemplate>
-                        <DataTemplate x:DataType="games:Game">
-                            <Grid IsDoubleTapEnabled="True" DoubleTapped="ListViewItem_DoubleTapped">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" MinWidth="150" MaxWidth="400"/>
-                                    <ColumnDefinition Width="*" MinWidth="50" MaxWidth="300"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
+            <ListView
+                x:Name="GamesList"
+                Grid.Row="1"
+                SelectionMode="None"
+                ItemsSource="{x:Bind VMGames.Items, Mode=OneWay}"
+                >
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="games:Game">
+                        <Grid IsDoubleTapEnabled="True" DoubleTapped="ListViewItem_DoubleTapped">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" MinWidth="150" MaxWidth="400"/>
+                                <ColumnDefinition Width="*" MinWidth="50" MaxWidth="300"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
 
-                                <TextBlock
+                            <TextBlock
                                     Grid.Column="0"
                                     Style="{StaticResource LW_TextBlockDefaultStyle}"
                                     Text="{x:Bind Name, Mode=OneTime}"
                                     />
 
-                                <TextBlock
+                            <TextBlock
                                     Grid.Column="1"
                                     Style="{StaticResource LW_TextBlockDefaultStyle}"
                                     Text="{x:Bind Date, Mode=OneTime}"
                                     />
 
-                                <TextBlock
+                            <TextBlock
                                     Grid.Column="2"
                                     Style="{StaticResource LW_TextBlockDefaultStyle}"
                                     Text="{x:Bind PlayersCount, Mode=OneTime}"
                                     />
-                            </Grid>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </Grid>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <TextBlock
+                x:Name="NoData"
+                Style="{StaticResource LW_TextBlockDefaultStyle}"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center"
+                Text="Данные не получены"
+                Visibility="Collapsed"
+                />
+        </Grid>
 
-        </layouts:PageLayoutTemplate>
-    </Grid>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="DataStates">
+                <VisualState x:Name="HasDataState"/>
+                <VisualState x:Name="NoDataState">
+                    <VisualState.Setters>
+                        <Setter Target="NoData.Visibility" Value="Visible"/>
+                        <Setter Target="GamesList.Visibility" Value="Collapsed"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+    </layouts:PageLayoutTemplate>
 </Page>

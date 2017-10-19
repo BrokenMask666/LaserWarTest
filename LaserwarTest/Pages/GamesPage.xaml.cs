@@ -20,9 +20,12 @@ namespace LaserwarTest.Pages
             InitializeComponent();
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
-            VMGames.Load();
+            await VMGames.Load();
+
+            if (VMGames.Items.Count == 0)
+                VisualStateManager.GoToState(this, nameof(NoDataState), false);
         }
 
         private void ListViewItem_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)

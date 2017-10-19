@@ -1,4 +1,5 @@
 ﻿using LaserwarTest.Presentation.Sounds;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
@@ -20,7 +21,10 @@ namespace LaserwarTest.Pages
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
-            VMSounds.Load();
+            await VMSounds.Load();
+
+            if (VMSounds.Items.Count == 0)
+                VisualStateManager.GoToState(this, nameof(NoDataState), false);
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)

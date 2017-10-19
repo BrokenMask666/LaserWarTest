@@ -35,7 +35,8 @@ namespace LaserwarTest.Pages.VK
             vkApi.Authorize(WebView, 
                 VKUserPermissions.Groups | 
                 VKUserPermissions.Docs | 
-                VKUserPermissions.Wall);
+                VKUserPermissions.Wall | 
+                VKUserPermissions.Photos);
         }
     }
 }
