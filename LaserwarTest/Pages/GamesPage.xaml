@@ -28,7 +28,7 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <Grid Margin="0,0,50,0">
+            <Grid x:Name="TableHeader" Margin="0,0,50,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" MinWidth="150" MaxWidth="400"/>
                     <ColumnDefinition Width="*" MinWidth="50" MaxWidth="300"/>
@@ -107,6 +107,7 @@
                     <VisualState.Setters>
                         <Setter Target="NoData.Visibility" Value="Visible"/>
                         <Setter Target="GamesList.Visibility" Value="Collapsed"/>
+                        <Setter Target="TableHeader.Visibility" Value="Collapsed"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>

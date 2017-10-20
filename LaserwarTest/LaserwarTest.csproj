@@ -19,9 +19,9 @@
     <WindowsXamlEnableOverview>true</WindowsXamlEnableOverview>
     <PackageCertificateKeyFile>LaserwarTest_TemporaryKey.pfx</PackageCertificateKeyFile>
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
-    <AppxPackageDir>D:\Anton\Coding\Laserwar\LaserwarTest\LaserwarTest\AppPackages\Debug %28v 0.0.5%29</AppxPackageDir>
+    <AppxPackageDir>D:\Anton\Coding\Laserwar\LaserwarTest\LaserwarTest\AppPackages\Debug %28v 1.0.0%29</AppxPackageDir>
     <AppxBundle>Always</AppxBundle>
-    <AppxBundlePlatforms>x86</AppxBundlePlatforms>
+    <AppxBundlePlatforms>x86|arm</AppxBundlePlatforms>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
